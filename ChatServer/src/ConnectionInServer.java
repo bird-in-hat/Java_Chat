@@ -7,6 +7,7 @@ class ConnectionInServer extends Thread {
 	ObjectInputStream  in;
     ObjectOutputStream  out;
 	Socket serverSocket;
+    String global_user_login;
 
 	public ConnectionInServer (Socket serverSocket_) {
 		try {
@@ -71,10 +72,7 @@ class ConnectionInServer extends Thread {
             switch (code) {
                 // клиент просит сервер сделать это:
                 case -1:
-                    Close_connection(cm.info); // клиент завершил работу, просто закрыть соединение
-
-                case 11:
-                    Check_login(cm.info); // exist? да - запрос пароля, нет - регистрация,
+                    Close_connection(); // клиент завершил работу, просто закрыть соединение
 
                 case 21:
                     Check_login_password(cm.info); // log pass correct? нет - повторять бесконечно, до закрытия соединения
@@ -84,28 +82,29 @@ class ConnectionInServer extends Thread {
                     User_sign_up(cm.info); // логин занят - перерегистрация, иначе отобразить пустой список чатов
 
                 case 40:
-                    Close_connection(cm.info); // клиент завершил работу
+                    Close_connection(); // клиент завершил работу
 
                 case 41:
-                    Open_conversation(cm.info, cm.texts[0]); //user, chat; отправить содержимое чата
+                    Open_conversation(cm.info); //chat; отправить содержимое чата
 
                 case 42:
-                    Join_conversation(cm.info, cm.texts[0]); //user, chat; отправить содержимое
+                    Join_conversation(cm.info); //chat; добавить чат в список чатов юзера
+                case 43:
+                    Send_conv_list();
                     // добавить юзера с список участников и обновить
                 /*
                 case 51:
-                    Get_conversation_content(cm.info, cm.texts[0]); // загрузить содержимое беседы(последние 10 сообщений) и отправить
+                    Get_conversation_content(cm.info); // link беседы; загрузить содержимое беседы(последние 10 сообщений) и отправить
                 case 61:
-                    Create_conversation(cm.info, cm.texts[0]); // добавить в список участников чата создателя
-                    // обновить список чатов создателя и добавить новый
-                    // если ссылка уникальна, иначе просить снова и снова, отправляя сообщение об ошибке
+                    Create_conversation(cm.info); // добавить в список участников чата создателя
+                    // если ссылка уникальна, иначе сообщение об ошибке
                 case 71:
-                    Broadcast_message(cm.info, cm.texts[0]); // автор, сообщение; записать сообщение в базу
+                    Broadcast_message(cm.info); // сообщение от юзера; записать сообщение в базу
                     // для всех участников беседы разослать новое сообщение (71)
                 case 72:
                     Create_task(cm.info, cm.texts[0]); // беседа, описание задачи
                 case 73:
-                    Leave_chat(cm.info, cm.texts[0]); // юзер, описание задачи
+                    Leave_chat(cm.info); //чат
                 ///TODO
                 */
             }
@@ -113,7 +112,8 @@ class ConnectionInServer extends Thread {
 
 			public void Close_connection(MessageNode info) {
                 //  close conn with user id user id
-                int user_id = info.id;
+                //String user_login = info.text1;
+                String user_login_ = global_user_login;
                 try {
                     // проверить, не занят ли канал другим потоком
                     in.close();
@@ -123,33 +123,21 @@ class ConnectionInServer extends Thread {
 
             }
 
-            public void Check_login(MessageNode info) {
-		        String login = info.text1;
-
-                MessageObject mo = new MessageObject();
-		        if (login in BD){
-                    mo.code = 21;
-                    mo.info.text1 = login;
-                }
-                else{
-                    mo.code = 31;
-                    mo.info.text1 = login;
-                }
-                new SendMessageObject(mo);
-            }
-
             public void Check_login_password(MessageNode info) {
+                String user_login_ = info.text1;
                 String pass = info.text2;
 
                 MessageObject mo = new MessageObject();
                 if (pass in BD) {
                         mo.code = 41;
+                        global_user_login = info.text1;
                 }
                 else{
                     mo.code = 100;
                     mo.info.text1 = "Incorrect password";
                 }
                 new SendMessageObject(mo);
+                // сохранить логин юзера или id для дальнейшего использования
             }
 
             public void User_sign_up(MessageNode info) {
@@ -159,7 +147,7 @@ class ConnectionInServer extends Thread {
                 MessageObject mo = new MessageObject();
                 if (login !in BD) {
                     // add log pass to bd
-                    mo.code = 41;
+                    mo.code = 21; // ввести лог пасс
                 }
                 else {
                     mo.code = 100;
@@ -168,8 +156,7 @@ class ConnectionInServer extends Thread {
                 new SendMessageObject(mo);
             }
 
-            public void Open_conversation(MessageNode user, MessageNode chat_info) {
-                String login = user.text1;
+            public void Open_conversation(MessageNode chat_info) {
                 String conv_title = chat_info.text1;
                 String conv_link = chat_info.text2;
 
@@ -185,8 +172,16 @@ class ConnectionInServer extends Thread {
                 new SendMessageObject(mo);
             }
 
+            public void Send_conv_list() {
+                // get conv list of global_user_login
+                MessageObject mo = new MessageObject();
+                mo.code = 41;
+                mo.info.text1 = conv_title;
+                mo.info.text2 = conv_link;
+                new SendMessageObject(mo);
 
 
+            }
 
 
 

@@ -1,15 +1,18 @@
+package src;
 import java.io.*;
 import java.net.*;
 
 
-class ConnectionInClient extends Thread {
+public class ConnectionInClient extends Thread {
 
 	ObjectInputStream  in;
 	Socket clientSocket;
+    ConnectionOutClient out;
 
-	public ConnectionInClient (Socket ClientSocket_) {
+	public ConnectionInClient (Socket ClientSocket_, ConnectionOutClient out_) {
 		try {
 			clientSocket = ClientSocket_;
+            out = out_;
 			in = new ObjectInputStream ( clientSocket.getInputStream());
 			this.start();
 		} catch(IOException e){System.out.println("Connection:"+e.getMessage());
@@ -19,7 +22,7 @@ class ConnectionInClient extends Thread {
 	public void run() { // an echo server
 		try {
             ClientHandler ch;
-			MessageObject mo = null;
+            MessageObject mo = null;
 			while(true) {
                 while ((mo = (MessageObject) in.readObject()) == null) {}
                 if (mo.EndConnection())
@@ -45,6 +48,7 @@ class ConnectionInClient extends Thread {
         public void run() {
             int code = sm.code;
             switch (code) {
+                // в ответ на команды сервера клиент будет менять содержимое gui-форм
                 /*
                 case 100:
                     Show_error(sm.info.text1);

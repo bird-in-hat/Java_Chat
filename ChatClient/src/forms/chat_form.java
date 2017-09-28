@@ -1,6 +1,7 @@
 package forms;
 
 import javax.swing.*;
+import src.*;
 
 public class chat_form extends JFrame{
     private JButton button_leave;
@@ -12,10 +13,11 @@ public class chat_form extends JFrame{
     private JButton button_send;
     private JButton button_show_task;
 
-    public chat_form() {
+    public chat_form(ConnectionOutClient out) {
         setSize(400, 300);
         this.setVisible(true);
         //setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.getContentPane().add(panel_chat_from);
+        this.setName("chat_form");
     }
 }

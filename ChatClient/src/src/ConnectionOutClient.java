@@ -1,8 +1,9 @@
+package src;
 import java.io.*;
 import java.net.*;
 
 // send single message to server
-class ConnectionOutClient {
+public class ConnectionOutClient {
 
 	ObjectOutputStream out;
 	Socket clientSocket;

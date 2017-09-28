@@ -46,8 +46,8 @@
         </constraints>
         <properties>
           <model>
-            <item value="Dialog"/>
             <item value="Group chat"/>
+            <item value="Dialog"/>
           </model>
         </properties>
       </component>

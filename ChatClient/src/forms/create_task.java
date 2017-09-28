@@ -1,6 +1,7 @@
 package forms;
 
 import javax.swing.*;
+import src.*;
 
 public class create_task extends JFrame{
     private JList list_members;
@@ -11,10 +12,11 @@ public class create_task extends JFrame{
     private JTextArea textArea_title;
     private JPanel panel_create_task;
 
-    public create_task() {
+    public create_task(ConnectionOutClient out) {
         setSize(300, 200);
         this.setVisible(true);
         //setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.getContentPane().add(panel_create_task);
+        this.setName("create_task");
     }
 }
