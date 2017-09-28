@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="org.sql2o:sql2o:1.5.4" type="repository">
+    <properties maven-id="org.sql2o:sql2o:1.5.4" />
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/sql2o-1.5.4.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/lib/sql2o-1.5.4-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES />
+  </library>
+</component>
