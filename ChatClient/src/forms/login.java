@@ -27,7 +27,7 @@ public class login extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 new registration(out);
-                FormsHelper.get_frame(e).dispose();
+                dispose();
             }
         });
 
@@ -39,8 +39,8 @@ public class login extends JFrame {
                 mo.info.text1 = textField_login.getText();
                 mo.info.text2 = new String(passwordField_pass.getPassword());
                 out.SendMessage(mo);
-                FormsHelper.get_frame(e).dispose();
+                dispose();
             }
         });
     }
-}
+} //+

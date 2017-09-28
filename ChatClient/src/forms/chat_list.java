@@ -16,22 +16,24 @@ public class chat_list extends JFrame{
     private JButton button_refresh;
     String[] link_list;
 
-    public void updateContent(MessageNode[] content) {
-        String[] titleList = new String[content.length];
-        link_list = new String[content.length];
-        for(int index = 0; index < content.length; index++) {
-            titleList[index] = content[index].text1;
-            link_list[index] = content[index].text2;
+    public void updateContent(MessageNode[] chats) {
+        String[] titleList = new String[chats.length];
+        link_list = new String[chats.length];
+        for(int index = 0; index < chats.length; index++) {
+            titleList[index] = chats[index].text1;
+            link_list[index] = chats[index].text2;
         }
         list_chat_list = new JList(titleList);
     }
 
-    public chat_list(ConnectionOutClient out, MessageObject mo) {
+    public chat_list(ConnectionOutClient out, MessageNode[] chats) {
         setSize(300, 200);
         this.setVisible(true);
         setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
         this.getContentPane().add(panel_chat_list);
         this.setName("chat_list");
+        updateContent(chats);
+
 
         button_enter_chat.addActionListener(new ActionListener() {
             @Override
@@ -61,6 +63,7 @@ public class chat_list extends JFrame{
                 MessageObject mo = new MessageObject();
                 mo.code = 43;  // показать список чатов
                 out.SendMessage(mo);
+                dispose();
             }
         });
 
@@ -71,9 +74,8 @@ public class chat_list extends JFrame{
                 for(int i=0;i<openedFrames.length;i++){
                     openedFrames[i].dispose();
                 }
-                FormsHelper.get_frame(e).dispose();
+                dispose();
             }
         });
     }
-
-}
+} // +

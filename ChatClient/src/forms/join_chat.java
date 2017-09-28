@@ -27,7 +27,7 @@ public class join_chat extends JFrame{
                 mo.info.text1 = text_chat_link.getText();
                 out.SendMessage(mo);
 
-                FormsHelper.get_frame(e).dispose();
+                dispose();
             }
         });
     }

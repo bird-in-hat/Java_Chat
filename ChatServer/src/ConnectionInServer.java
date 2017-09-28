@@ -104,7 +104,9 @@ class ConnectionInServer extends Thread {
                 case 72:
                     Create_task(cm.info, cm.texts[0]); // беседа, описание задачи
                 case 73:
-                    Leave_chat(cm.info); //чат
+                    Leave_chat(cm.info); // удалить чат из списка чатов юзера
+                case 74:
+                    Get_members(cm.info);
                 ///TODO
                 */
             }

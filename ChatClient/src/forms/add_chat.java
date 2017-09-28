@@ -27,9 +27,8 @@ public class add_chat extends JFrame{
                 mo.info.text1 = textField_chat_name.getText();
                 mo.info.text2 = textField_chat_link.getText();
                 out.SendMessage(mo);
-
-                FormsHelper.get_frame(e).dispose();
+                dispose();
             }
         });
     }
-}
+} //+

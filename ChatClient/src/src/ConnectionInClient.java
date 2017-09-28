@@ -1,6 +1,8 @@
 package src;
 import java.io.*;
 import java.net.*;
+import javax.swing.*;
+import forms.*;
 
 
 public class ConnectionInClient extends Thread {
@@ -49,17 +51,19 @@ public class ConnectionInClient extends Thread {
             int code = sm.code;
             switch (code) {
                 // в ответ на команды сервера клиент будет менять содержимое gui-форм
-                /*
+
                 case 100:
                     Show_error(sm.info.text1);
-                case -1:
-                    Stop(); // сервер завершил работу
+
                 case 21:
-                    Send_pass(sm.info;);
+                    Send_pass();
+
                 case 31:
                     Registration();
+
                 case 41:
                     Show_user_conversations(sm.texts);
+                    /*
                 case 51:
                     Show_conversation_content(sm.info, sm.texts); // название, id беседы; сообщения
 
@@ -68,7 +72,8 @@ public class ConnectionInClient extends Thread {
                 case 73:
                     Update_conversation_members(sm.info, sm.texts);
                 case 74:
-                    Update_conversation_members(sm.info, sm.texts);
+                    Show_conversation_members(sm.info);
+
                 case 720:
                     Show_conversation_task(sm.info, sm.texts[0]);
                 case 721:
@@ -79,6 +84,32 @@ public class ConnectionInClient extends Thread {
                 */
             }
         }
+
+        private void Show_error(String text) {
+            JFrame frame = new JFrame();
+            JOptionPane.showMessageDialog(frame,
+                    "Eggs are not supposed to be green.");
+        }
+
+        private void Send_pass() {
+            new login(out);
+        }
+
+        private void Registration() {
+            new registration(out);
+        }
+
+        private void Show_user_conversations(MessageNode[] chats) {
+            if (FormsHelper.isFrameOpen("chat_list")){
+
+            }
+            else {
+                new chat_list(out, chats);
+            }
+        }
+
+
+
 
         }
 }
