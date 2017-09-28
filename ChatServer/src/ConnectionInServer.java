@@ -4,28 +4,28 @@ import java.net.*;
 
 class ConnectionInServer extends Thread {
 
-	ObjectInputStream  in;
+    ObjectInputStream  in;
     ObjectOutputStream  out;
-	Socket serverSocket;
+    Socket serverSocket;
     String global_user_login;
 
-	public ConnectionInServer (Socket serverSocket_) {
-		try {
+    public ConnectionInServer (Socket serverSocket_) {
+        try {
             serverSocket = serverSocket_;
-			in = new ObjectInputStream ( serverSocket.getInputStream());
+            in = new ObjectInputStream ( serverSocket.getInputStream());
             synchronized(out) {
                 out = new ObjectOutputStream(serverSocket.getOutputStream());
                 this.start();
             }
-		} catch(IOException e){System.out.println("Connection:"+e.getMessage());
-		}
-	}
+        } catch(IOException e){System.out.println("Connection:"+e.getMessage());
+        }
+    }
 
-	public void run() { // an echo server
-		try {
-			MessageObject mo = null;
+    public void run() { // an echo server
+        try {
+            MessageObject mo = null;
             ServerHandler sh;
-			while(true) {
+            while(true) {
                 while ((mo = (MessageObject) in.readObject()) == null) {
                 }
                 if (mo.EndConnection())
@@ -34,13 +34,13 @@ class ConnectionInServer extends Thread {
                     sh = new ServerHandler(new MessageObject(mo));
                 mo = null;
             }
-		} catch (EOFException e){System.out.println("EOF:"+e.getMessage());
-		} catch (IOException e) {System.out.println("readline:"+e.getMessage());
-		} catch (ClassNotFoundException e) { System.out.println("NULL:"+e.getMessage());
-		}
-	}
+        } catch (EOFException e){System.out.println("EOF:"+e.getMessage());
+        } catch (IOException e) {System.out.println("readline:"+e.getMessage());
+        } catch (ClassNotFoundException e) { System.out.println("NULL:"+e.getMessage());
+        }
+    }
 
-	class SendMessageObject extends Thread {
+    class SendMessageObject extends Thread {
 
         ObjectOutputStream  out;
         MessageObject message;
@@ -58,16 +58,16 @@ class ConnectionInServer extends Thread {
         }
     }
 
-	public class ServerHandler extends Thread {
+    public class ServerHandler extends Thread {
 
-		MessageObject cm;
+        MessageObject cm;
 
-		ServerHandler(MessageObject cm_) {
-			cm = cm_;
-			this.start();
-		}
+        ServerHandler(MessageObject cm_) {
+            cm = cm_;
+            this.start();
+        }
 
-		public void run() {
+        public void run() {
             int code = cm.code;
             switch (code) {
                 // клиент просит сервер сделать это:
@@ -91,7 +91,7 @@ class ConnectionInServer extends Thread {
                     Join_conversation(cm.info); //chat; добавить чат в список чатов юзера
                 case 43:
                     Send_conv_list();
-                    // добавить юзера с список участников и обновить
+                    // отправить юзеру список бесед
                 /*
                 case 51:
                     Get_conversation_content(cm.info); // link беседы; загрузить содержимое беседы(последние 10 сообщений) и отправить
@@ -110,7 +110,7 @@ class ConnectionInServer extends Thread {
             }
         }
 
-			public void Close_connection(MessageNode info) {
+            public void Close_connection(MessageNode info) {
                 //  close conn with user id user id
                 //String user_login = info.text1;
                 String user_login_ = global_user_login;
@@ -187,6 +187,6 @@ class ConnectionInServer extends Thread {
 
 
         }
-		}
-	}
+        }
+    }
 }
