@@ -79,6 +79,9 @@ public class chat_list extends JFrame{
                         fr.dispose();
                 }
                 FramesList.clear();
+                MessageObject mo = new MessageObject();
+                mo.code = 40;
+                out.SendMessage(mo);
                 dispose();
             }
         });

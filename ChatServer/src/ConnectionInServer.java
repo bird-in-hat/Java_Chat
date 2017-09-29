@@ -73,7 +73,7 @@ class ConnectionInServer extends Thread {
                 // клиент просит сервер сделать это:
                 case -1:
                     Close_connection(); // клиент завершил работу, просто закрыть соединение
-
+/*
                 case 21:
                     Check_login_password(cm.info); // log pass correct? нет - повторять бесконечно, до закрытия соединения
                     // да - показать список чатов
@@ -92,7 +92,7 @@ class ConnectionInServer extends Thread {
                 case 43:
                     Send_conv_list();
                     // отправить юзеру список бесед
-                /*
+
                 case 51:
                     Get_conversation_content(cm.info); // link беседы; загрузить содержимое беседы(последние 10 сообщений) и отправить
                 case 61:
@@ -112,83 +112,73 @@ class ConnectionInServer extends Thread {
             }
         }
 
-            public void Close_connection(MessageNode info) {
-                //  close conn with user id user id
-                //String user_login = info.text1;
-                String user_login_ = global_user_login;
-                try {
-                    // проверить, не занят ли канал другим потоком
-                    in.close();
-                    out.close();
-                    serverSocket.close();
-                } catch (IOException e) { System.out.println("readline:"+e.getMessage());}
+        public void Close_connection() {
+            String user_login_ = global_user_login;
+            try {
+                // проверить, не занят ли канал другим потоком
 
-            }
+                in.close();
+                out.close();
+            } catch (IOException e) { System.out.println("readline:"+e.getMessage());}
+        }
+        /*
+        public void Check_login_password(MessageNode info) {
+            String user_login_ = info.text1;
+            String pass = info.text2;
 
-            public void Check_login_password(MessageNode info) {
-                String user_login_ = info.text1;
-                String pass = info.text2;
-
-                MessageObject mo = new MessageObject();
-                if (pass in BD) {
-                        mo.code = 41;
-                        global_user_login = info.text1;
-                }
-                else{
-                    mo.code = 100;
-                    mo.info.text1 = "Incorrect password";
-                }
-                new SendMessageObject(mo);
-                // сохранить логин юзера или id для дальнейшего использования
-            }
-
-            public void User_sign_up(MessageNode info) {
-                String login = info.text1;
-                String pass = info.text2;
-
-                MessageObject mo = new MessageObject();
-                if (login !in BD) {
-                    // add log pass to bd
-                    mo.code = 21; // ввести лог пасс
-                }
-                else {
-                    mo.code = 100;
-                    mo.info.text1 = "Login already used";
-                }
-                new SendMessageObject(mo);
-            }
-
-            public void Open_conversation(MessageNode chat_info) {
-                String conv_title = chat_info.text1;
-                String conv_link = chat_info.text2;
-
-                MessageObject mo = new MessageObject();
-                // получить из базы последние N сообщений ( N=20) в виде массива MessageArray из MessageNode порядок (прямой, обратный?)
-                MessageNode[] MessageArray = null;
-                for(int index = 0; index < MessageArray.length; index++) {
-                    mo.texts[index] = new MessageNode(MessageArray[index]);
-                }
-                mo.code = 51;
-                mo.info.text1 = conv_title;
-                mo.info.text2 = conv_link;
-                new SendMessageObject(mo);
-            }
-
-            public void Send_conv_list() {
-                // get conv list of global_user_login
-                MessageObject mo = new MessageObject();
+            MessageObject mo = new MessageObject();
+            if (pass in BD) {
                 mo.code = 41;
-                mo.info.text1 = conv_title;
-                mo.info.text2 = conv_link;
-                new SendMessageObject(mo);
-
-
+                global_user_login = info.text1;
             }
-
-
-
-
+                else{
+                mo.code = 100;
+                mo.info.text1 = "Incorrect password";
+            }
+            new SendMessageObject(mo);
+            // сохранить логин юзера или id для дальнейшего использования
         }
+
+        public void User_sign_up(MessageNode info) {
+            String login = info.text1;
+            String pass = info.text2;
+
+            MessageObject mo = new MessageObject();
+            if (login !in BD) {
+                // add log pass to bd
+                mo.code = 21; // ввести лог пасс
+            }
+                else {
+                mo.code = 100;
+                mo.info.text1 = "Login already used";
+            }
+            new SendMessageObject(mo);
         }
+
+        public void Open_conversation(MessageNode chat_info) {
+            String conv_title = chat_info.text1;
+            String conv_link = chat_info.text2;
+
+            MessageObject mo = new MessageObject();
+            // получить из базы последние N сообщений ( N=20) в виде массива MessageArray из MessageNode порядок (прямой, обратный?)
+            MessageNode[] MessageArray = null;
+            for(int index = 0; index < MessageArray.length; index++) {
+                mo.texts[index] = new MessageNode(MessageArray[index]);
+            }
+            mo.code = 51;
+            mo.info.text1 = conv_title;
+            mo.info.text2 = conv_link;
+            new SendMessageObject(mo);
+        }
+
+        public void Send_conv_list() {
+            // get conv list of global_user_login
+            MessageObject mo = new MessageObject();
+            mo.code = 41;
+            mo.info.text1 = conv_title;
+            mo.info.text2 = conv_link;
+            new SendMessageObject(mo);
+        }
+        */
     }
 }
