@@ -90,8 +90,8 @@
       <file leaf-file-name="TCPServer.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/TCPServer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="463">
-              <caret line="67" column="38" lean-forward="true" selection-start-line="67" selection-start-column="38" selection-end-line="67" selection-end-column="38" />
+            <state relative-caret-position="191">
+              <caret line="21" column="47" lean-forward="true" selection-start-line="21" selection-start-column="47" selection-end-line="21" selection-end-column="47" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -99,11 +99,36 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ConnectionInServer.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ChatTables.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/ChatTables.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="204">
+              <caret line="52" column="5" lean-forward="true" selection-start-line="52" selection-start-column="5" selection-end-line="52" selection-end-column="5" />
+              <folding>
+                <element signature="method#ChatTables#0;class#ChatTables#0" expanded="false" />
+                <element signature="method#getUser#0;class#ChatTables#0" expanded="false" />
+                <element signature="method#getConversation#0;class#ChatTables#0" expanded="false" />
+                <element signature="method#addUser#0;class#ChatTables#0" expanded="false" />
+                <element signature="method#addConversation#0;class#ChatTables#0" expanded="false" />
+                <element signature="method#addMessageToConversation#0;class#ChatTables#0" expanded="false" />
+                <element signature="method#isUserExist#0;class#ChatTables#0" expanded="false" />
+                <element signature="method#isConversationExist#0;class#ChatTables#0" expanded="false" />
+                <element signature="method#isPasswordCorrect#0;class#ChatTables#0" expanded="false" />
+                <element signature="method#getMessages#0;class#ChatTables#0" expanded="false" />
+                <element signature="method#getConversations#0;class#ChatTables#0" expanded="false" />
+                <element signature="method#getMembers#0;class#ChatTables#0" expanded="false" />
+                <element signature="method#joinConversation#0;class#ChatTables#0" expanded="false" />
+                <element signature="method#leaveConversation#0;class#ChatTables#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ConnectionInServer.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ConnectionInServer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="344">
-              <caret line="231" column="42" lean-forward="true" selection-start-line="231" selection-start-column="42" selection-end-line="231" selection-end-column="42" />
+            <state relative-caret-position="68">
+              <caret line="13" column="0" lean-forward="false" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#Close_connection#0;class#ServerHandler#0;class#ConnectionInServer#0" expanded="false" />
@@ -114,19 +139,8 @@
                 <element signature="method#Join_conversation#0;class#ServerHandler#0;class#ConnectionInServer#0" expanded="false" />
                 <element signature="method#Create_conversation#0;class#ServerHandler#0;class#ConnectionInServer#0" expanded="false" />
                 <element signature="method#Get_members#0;class#ServerHandler#0;class#ConnectionInServer#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ChatTables.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ChatTables.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="531">
-              <caret line="182" column="40" lean-forward="false" selection-start-line="182" selection-start-column="40" selection-end-line="182" selection-end-column="40" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="method#joinConversation#0;class#ChatTables#0" expanded="false" />
+                <element signature="method#Broadcast_message#0;class#ServerHandler#0;class#ConnectionInServer#0" expanded="false" />
+                <element signature="method#Leave_chat#0;class#ServerHandler#0;class#ConnectionInServer#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -226,12 +240,12 @@
         <option value="$PROJECT_DIR$/src/Main.java" />
         <option value="$PROJECT_DIR$/src/db_classes/ChatTables.java" />
         <option value="$PROJECT_DIR$/src/db_classes/Message.java" />
-        <option value="$PROJECT_DIR$/src/TCPServer.java" />
         <option value="$PROJECT_DIR$/src/db_classes/Conversation.java" />
         <option value="$PROJECT_DIR$/src/db_classes/User.java" />
         <option value="$PROJECT_DIR$/src/db_classes/UserConversation.java" />
         <option value="$PROJECT_DIR$/src/ChatTables.java" />
         <option value="$PROJECT_DIR$/src/ConnectionInServer.java" />
+        <option value="$PROJECT_DIR$/src/TCPServer.java" />
       </list>
     </option>
   </component>
@@ -893,12 +907,12 @@
       <workItem from="1506507574209" duration="5828000" />
       <workItem from="1506515146558" duration="2909000" />
       <workItem from="1506518548154" duration="3441000" />
-      <workItem from="1506698186049" duration="14370000" />
+      <workItem from="1506698186049" duration="14938000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="52043000" />
+    <option name="totallyTimeSpent" value="52611000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1162,31 +1176,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/TCPServer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="463">
-          <caret line="67" column="38" lean-forward="true" selection-start-line="67" selection-start-column="38" selection-end-line="67" selection-end-column="38" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ChatTables.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="531">
-          <caret line="182" column="40" lean-forward="false" selection-start-line="182" selection-start-column="40" selection-end-line="182" selection-end-column="40" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#joinConversation#0;class#ChatTables#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/ConnectionInServer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="344">
-          <caret line="231" column="42" lean-forward="true" selection-start-line="231" selection-start-column="42" selection-end-line="231" selection-end-column="42" />
+        <state relative-caret-position="68">
+          <caret line="13" column="0" lean-forward="false" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#Close_connection#0;class#ServerHandler#0;class#ConnectionInServer#0" expanded="false" />
@@ -1197,6 +1190,41 @@
             <element signature="method#Join_conversation#0;class#ServerHandler#0;class#ConnectionInServer#0" expanded="false" />
             <element signature="method#Create_conversation#0;class#ServerHandler#0;class#ConnectionInServer#0" expanded="false" />
             <element signature="method#Get_members#0;class#ServerHandler#0;class#ConnectionInServer#0" expanded="false" />
+            <element signature="method#Broadcast_message#0;class#ServerHandler#0;class#ConnectionInServer#0" expanded="false" />
+            <element signature="method#Leave_chat#0;class#ServerHandler#0;class#ConnectionInServer#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/TCPServer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="191">
+          <caret line="21" column="47" lean-forward="true" selection-start-line="21" selection-start-column="47" selection-end-line="21" selection-end-column="47" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ChatTables.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="52" column="5" lean-forward="true" selection-start-line="52" selection-start-column="5" selection-end-line="52" selection-end-column="5" />
+          <folding>
+            <element signature="method#ChatTables#0;class#ChatTables#0" expanded="false" />
+            <element signature="method#getUser#0;class#ChatTables#0" expanded="false" />
+            <element signature="method#getConversation#0;class#ChatTables#0" expanded="false" />
+            <element signature="method#addUser#0;class#ChatTables#0" expanded="false" />
+            <element signature="method#addConversation#0;class#ChatTables#0" expanded="false" />
+            <element signature="method#addMessageToConversation#0;class#ChatTables#0" expanded="false" />
+            <element signature="method#isUserExist#0;class#ChatTables#0" expanded="false" />
+            <element signature="method#isConversationExist#0;class#ChatTables#0" expanded="false" />
+            <element signature="method#isPasswordCorrect#0;class#ChatTables#0" expanded="false" />
+            <element signature="method#getMessages#0;class#ChatTables#0" expanded="false" />
+            <element signature="method#getConversations#0;class#ChatTables#0" expanded="false" />
+            <element signature="method#getMembers#0;class#ChatTables#0" expanded="false" />
+            <element signature="method#joinConversation#0;class#ChatTables#0" expanded="false" />
+            <element signature="method#leaveConversation#0;class#ChatTables#0" expanded="false" />
           </folding>
         </state>
       </provider>

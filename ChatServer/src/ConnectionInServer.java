@@ -12,6 +12,7 @@ class ConnectionInServer extends Thread {
     String global_user_login;
     ChatTables ct;
 
+
     public ConnectionInServer (Socket serverSocket_, ChatTables ct_) {
         try {
             serverSocket = serverSocket_;
@@ -105,11 +106,13 @@ class ConnectionInServer extends Thread {
                     // для всех участников беседы разослать новое сообщение (71)
                 case 74:
                     Get_members(cm.info);
+                case 73:
+                    Leave_chat(cm.info); // удалить чат из списка чатов юзера
                     /*
                 case 72:
                     Create_task(cm.info, cm.texts[0]); // беседа, описание задачи
-                case 73:
-                    Leave_chat(cm.info); // удалить чат из списка чатов юзера
+                case ??:
+                    Show_task(??);
 
                 ///TODO
                 */
@@ -240,6 +243,12 @@ class ConnectionInServer extends Thread {
             mo.texts[0].text1 = sender;
             mo.texts[0].text2 = text;
             // для всех открытых соединений разослать mo new SendMessageObject(mo)
+        }
+
+        public void Leave_chat(MessageNode chat_info) {
+            String conv_link = chat_info.text1;
+            ct.leaveConversation(global_user_login, conv_link);
+            Send_conv_list();
         }
 
     }

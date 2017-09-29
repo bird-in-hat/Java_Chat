@@ -20,7 +20,7 @@ public class TCPServer {
 
             ConnectionSource cs = new JdbcConnectionSource("jdbc:sqlite:test.sqlite3");
             ChatTables ct = new ChatTables(cs);
-            synchronized (cs) {
+            synchronized (ct) {
                 while (true) {
                     Socket clientSocket = listenSocket.accept(); // listen for new connection
                     ConnectionInServer ci = new ConnectionInServer(clientSocket, ct); // launch new thread

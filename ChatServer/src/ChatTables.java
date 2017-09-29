@@ -186,8 +186,6 @@ public class ChatTables {
         return mn;
     }
 
-
-
     public void joinConversation(String login, String link) {
         User u = getUser(login);
         Conversation c = getConversation(link);
@@ -195,5 +193,19 @@ public class ChatTables {
         try {
             userConvDao.create(uc);
         } catch (SQLException e) {System.out.println("joinConversation "+e.getMessage());}
+    }
+
+    public void leaveConversation(String login, String link) {
+        List<UserConversation> user_conversationList = null;
+        try {
+            User u = getUser(login);
+            Conversation c = getConversation(link);
+            QueryBuilder<UserConversation, Integer> queryBuilder =
+                    userConvDao.queryBuilder();
+            user_conversationList = userConvDao.query(queryBuilder.where().
+                    eq("user", u).and().eq("conversation", c).prepare());
+            if (!(user_conversationList == null || user_conversationList.isEmpty()))
+                userConvDao.delete(user_conversationList.get(0));
+        } catch (SQLException e){System.out.println("getConversations "+e.getMessage());}
     }
 }
