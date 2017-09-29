@@ -26,7 +26,6 @@ public class join_chat extends JFrame{
                 mo.code = 42;  // add conversation to list
                 mo.info.text1 = text_chat_link.getText();
                 out.SendMessage(mo);
-
                 dispose();
             }
         });

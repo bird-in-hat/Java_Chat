@@ -6,6 +6,7 @@ import src.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class chat_list extends JFrame{
     private JList list_chat_list;
@@ -15,6 +16,8 @@ public class chat_list extends JFrame{
     private JButton button_join;
     private JButton button_refresh;
     String[] link_list;
+    JFrame currFrame;
+
 
     public void updateContent(MessageNode[] chats) {
         String[] titleList = new String[chats.length];
@@ -24,16 +27,17 @@ public class chat_list extends JFrame{
             link_list[index] = chats[index].text2;
         }
         list_chat_list = new JList(titleList);
+        list_chat_list.updateUI();
     }
 
-    public chat_list(ConnectionOutClient out, MessageNode[] chats) {
+    public chat_list(ArrayList<JFrame> FramesList, ConnectionOutClient out, MessageNode[] chats) {
         setSize(300, 200);
         this.setVisible(true);
         setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
         this.getContentPane().add(panel_chat_list);
         this.setName("chat_list");
+        FramesList.add(this);
         updateContent(chats);
-
 
         button_enter_chat.addActionListener(new ActionListener() {
             @Override
@@ -63,17 +67,18 @@ public class chat_list extends JFrame{
                 MessageObject mo = new MessageObject();
                 mo.code = 43;  // показать список чатов
                 out.SendMessage(mo);
-                dispose();
             }
         });
 
         button_exit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Frame openedFrames[] = Frame.getFrames();
-                for(int i=0;i<openedFrames.length;i++){
-                    openedFrames[i].dispose();
+
+                for(JFrame fr: FramesList){
+                    if (!fr.equals(this))
+                        fr.dispose();
                 }
+                FramesList.clear();
                 dispose();
             }
         });

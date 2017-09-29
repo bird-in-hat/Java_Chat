@@ -3,6 +3,7 @@ package forms;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 
 public final class FormsHelper {
 
@@ -11,12 +12,11 @@ public final class FormsHelper {
         return (JFrame) SwingUtilities.getRoot(component);
     }
 
-    public static boolean isFrameOpen(String FrameName){
-        Frame openedFrames[] = Frame.getFrames();
-        for(int i=0;i<openedFrames.length;i++){
-            if (openedFrames[i].getName().equals(FrameName))
-                return true;
+    public static JFrame isFrameOpen(ArrayList<JFrame> FramesList, String FrameName){
+        for(JFrame frame: FramesList){
+            if (frame.getName().equals(FrameName))
+                return frame;
         }
-        return false;
+        return null;
     }
 }

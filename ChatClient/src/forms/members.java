@@ -10,18 +10,22 @@ public class members extends JFrame {
     private JList list_members;
     private JPanel panel_members_list;
 
-    public members(ConnectionOutClient out, String conv_link, MessageNode[] node_members_list){
+    public members(MessageNode conv_info, MessageNode[] node_members_list){
         setSize(300, 200);
         this.setVisible(true);
         //setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.getContentPane().add(panel_members_list);
+        String conv_link = conv_info.text2;
         this.setName("members"+conv_link);
+        updateContent(node_members_list);
+    }
 
-        String[] members_list = new String[node_members_list.length];
-        members_list = new String[node_members_list.length];
+    public void updateContent(MessageNode[] node_members_list) {
+        DefaultListModel<String> model = new DefaultListModel<>();
+        list_members = new JList(model);
         for(int index = 0; index < node_members_list.length; index++) {
-            members_list[index] = node_members_list[index].text1;
+            model.addElement(node_members_list[index].text1);
         }
-        list_members = new JList(members_list);
+        list_members.updateUI();
     }
 }//+

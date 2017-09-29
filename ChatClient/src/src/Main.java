@@ -18,9 +18,14 @@ public class Main {
             String server_ip = "localhost";
             int server_port = 1234;
             s = new Socket(server_ip, server_port);
-            login l = new login();
+            ArrayList<JFrame> FramesList = new ArrayList<JFrame>();
             ConnectionOutClient out = new ConnectionOutClient(s);
-            ConnectionInClient ci = new ConnectionInClient(s, out); // есть поток обрабатывающий принятые сообщения
+            synchronized(FramesList){
+                synchronized(out){
+                    login l = new login(FramesList, out);
+                    ConnectionInClient ci = new ConnectionInClient(s, out, FramesList); // есть поток обрабатывающий принятые сообщения
+                }
+            }
         } catch (UnknownHostException e) {
             System.out.println("Socket:" + e.getMessage()); // host cannot be resolved
         } catch (EOFException e) {
