@@ -19,8 +19,4 @@ public class MessageObject implements Serializable {
             this.texts[index] = new MessageNode(other.texts[index]);
         }
     }
-
-    public boolean EndConnection(){
-        return this.code == -1 || this.code == 0;
-    }
 }
