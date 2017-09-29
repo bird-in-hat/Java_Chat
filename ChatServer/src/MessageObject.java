@@ -8,13 +8,6 @@ public class MessageObject implements Serializable {
     public MessageNode[] texts;
     public MessageNode info;
 
-    public MessageObject(int array_length) {
-        if (array_length == 0)
-            texts = null;
-        else
-            texts = new MessageNode[array_length];
-    }
-
     public MessageObject() {
             texts = null;
     }

@@ -6,14 +6,14 @@ import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable(tableName = "users")
 public class User {
-    @DatabaseField(canBeNull = false, generatedId = true)
+    @DatabaseField(canBeNull = false, generatedId = true, columnName = "id")
     public int id;
-    @DatabaseField(canBeNull = false, unique = true)
+    @DatabaseField(canBeNull = false, unique = true, columnName = "login")
     public String login;
-    @DatabaseField(canBeNull = false, unique = true)
+    @DatabaseField(canBeNull = false, unique = true, columnName = "password")
     public String password;
 
-    @ForeignCollectionField(eager = true)
+    @ForeignCollectionField()
     public ForeignCollection<UserConversation> userConversations;
 
     public User() {}

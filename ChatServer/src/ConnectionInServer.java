@@ -1,3 +1,5 @@
+import db_classes.User;
+
 import java.io.*;
 import java.net.*;
 
@@ -8,11 +10,13 @@ class ConnectionInServer extends Thread {
     ObjectOutputStream  out;
     Socket serverSocket;
     String global_user_login;
+    ChatTables ct;
 
-    public ConnectionInServer (Socket serverSocket_) {
+    public ConnectionInServer (Socket serverSocket_, ChatTables ct_) {
         try {
             serverSocket = serverSocket_;
             in = new ObjectInputStream ( serverSocket.getInputStream());
+            ct = ct_;
             synchronized(out) {
                 out = new ObjectOutputStream(serverSocket.getOutputStream());
                 this.start();
@@ -73,7 +77,7 @@ class ConnectionInServer extends Thread {
                 // клиент просит сервер сделать это:
                 case -1:
                     Close_connection(); // клиент завершил работу, просто закрыть соединение
-/*
+
                 case 21:
                     Check_login_password(cm.info); // log pass correct? нет - повторять бесконечно, до закрытия соединения
                     // да - показать список чатов
@@ -92,28 +96,27 @@ class ConnectionInServer extends Thread {
                 case 43:
                     Send_conv_list();
                     // отправить юзеру список бесед
-
-                case 51:
-                    Get_conversation_content(cm.info); // link беседы; загрузить содержимое беседы(последние 10 сообщений) и отправить
                 case 61:
                     Create_conversation(cm.info); // добавить в список участников чата создателя
                     // если ссылка уникальна, иначе сообщение об ошибке
+
                 case 71:
                     Broadcast_message(cm.info); // сообщение от юзера; записать сообщение в базу
                     // для всех участников беседы разослать новое сообщение (71)
+                case 74:
+                    Get_members(cm.info);
+                    /*
                 case 72:
                     Create_task(cm.info, cm.texts[0]); // беседа, описание задачи
                 case 73:
                     Leave_chat(cm.info); // удалить чат из списка чатов юзера
-                case 74:
-                    Get_members(cm.info);
+
                 ///TODO
                 */
             }
         }
 
         public void Close_connection() {
-            String user_login_ = global_user_login;
             try {
                 // проверить, не занят ли канал другим потоком
 
@@ -121,36 +124,44 @@ class ConnectionInServer extends Thread {
                 out.close();
             } catch (IOException e) { System.out.println("readline:"+e.getMessage());}
         }
-        /*
+
         public void Check_login_password(MessageNode info) {
-            String user_login_ = info.text1;
-            String pass = info.text2;
+            String user_login = info.text1;
+            String user_password = info.text2;
 
             MessageObject mo = new MessageObject();
-            if (pass in BD) {
-                mo.code = 41;
-                global_user_login = info.text1;
+            if (ct.isUserExist(user_login)){
+                if (ct.isPasswordCorrect(user_login, user_password)){
+                    mo.code = 41;
+                    global_user_login = user_login;
+                    mo.info.text1 = user_login;
+                }
+                else {
+                    mo.code = 100;
+                    mo.info.text1 = "Incorrect password";
+                }
             }
-                else{
+            else {
                 mo.code = 100;
-                mo.info.text1 = "Incorrect password";
+                mo.info.text1 = "Login not found. Create new account";
             }
             new SendMessageObject(mo);
             // сохранить логин юзера или id для дальнейшего использования
         }
 
         public void User_sign_up(MessageNode info) {
-            String login = info.text1;
-            String pass = info.text2;
+            String user_login = info.text1;
+            String user_password = info.text2;
 
             MessageObject mo = new MessageObject();
-            if (login !in BD) {
-                // add log pass to bd
-                mo.code = 21; // ввести лог пасс
-            }
-                else {
+            if (ct.isUserExist(user_login)) {
                 mo.code = 100;
                 mo.info.text1 = "Login already used";
+            }
+            else {
+                ct.addUser(user_login, user_password);
+                mo.code = 21; // ввести лог пасс
+                mo.info.text1 = user_login;
             }
             new SendMessageObject(mo);
         }
@@ -161,10 +172,7 @@ class ConnectionInServer extends Thread {
 
             MessageObject mo = new MessageObject();
             // получить из базы последние N сообщений ( N=20) в виде массива MessageArray из MessageNode порядок (прямой, обратный?)
-            MessageNode[] MessageArray = null;
-            for(int index = 0; index < MessageArray.length; index++) {
-                mo.texts[index] = new MessageNode(MessageArray[index]);
-            }
+            mo.texts = ct.getMessages(conv_link);
             mo.code = 51;
             mo.info.text1 = conv_title;
             mo.info.text2 = conv_link;
@@ -172,13 +180,67 @@ class ConnectionInServer extends Thread {
         }
 
         public void Send_conv_list() {
-            // get conv list of global_user_login
             MessageObject mo = new MessageObject();
             mo.code = 41;
-            mo.info.text1 = conv_title;
-            mo.info.text2 = conv_link;
+            mo.texts = ct.getConversations(global_user_login);
             new SendMessageObject(mo);
         }
-        */
+
+        public void Join_conversation(MessageNode chat_info) {
+            MessageObject mo = new MessageObject();
+            if (!ct.isConversationExist(chat_info.text1)){
+                mo.code = 100;
+                mo.info.text1 = "No conversation found";
+            }
+            else {
+                if (ct.isUserInConversation(global_user_login, chat_info.text1)) {
+                    mo.code = 100;
+                    mo.info.text1 = "You alreday in this conversation";
+                } else {
+                    ct.joinConversation(global_user_login, chat_info.text1);
+                    Send_conv_list();
+                    return;
+                }
+            }
+            new SendMessageObject(mo);
+        }
+
+        public void Create_conversation(MessageNode chat_info) {
+            MessageObject mo = new MessageObject();
+            if (!ct.isConversationExist(chat_info.text1)){
+                ct.addConversation(chat_info.text1, chat_info.text2);
+                ct.joinConversation(global_user_login, chat_info.text2);
+                mo.code = 41;
+                mo.texts = ct.getConversations(global_user_login);
+            }
+            else{
+                mo.code = 100;
+                mo.info.text1 = "Conversation with your link is already exist";
+            }
+            new SendMessageObject(mo);
+        }
+
+        public void Get_members(MessageNode chat_info) {
+            MessageObject mo = new MessageObject();
+            mo.code = 72;
+            mo.texts = ct.getMembers(chat_info.text1);
+            new SendMessageObject(mo);
+        }
+
+        public void Broadcast_message(MessageNode chat_info) {
+            String conv_link = chat_info.text1;
+            String text = chat_info.text2;
+            String sender = global_user_login;
+            ct.addMessageToConversation(sender, conv_link, text);
+
+            MessageObject mo = new MessageObject();
+            mo.code = 71;
+            mo.info.text2 = conv_link;
+            mo.texts = new MessageNode[1];
+            mo.texts[0].text1 = sender;
+            mo.texts[0].text2 = text;
+            // для всех открытых соединений разослать mo new SendMessageObject(mo)
+        }
+
     }
 }

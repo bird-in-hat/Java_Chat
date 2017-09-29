@@ -6,15 +6,23 @@ import com.j256.ormlite.field.DatabaseField;
 
 @DatabaseTable(tableName = "convs")
 public class Conversation {
-    @DatabaseField(canBeNull = false, generatedId = true)
+
+    public static final String CONVERSATION_ID = "id";
+    public static final String CONVERSATION_TITLE = "title";
+    public static final String CONVERSATION_LINK = "link";
+
+    @DatabaseField(canBeNull = false, generatedId = true, columnName = CONVERSATION_ID)
     public int id;
-    @DatabaseField(canBeNull = false)
+    @DatabaseField(canBeNull = false, columnName = CONVERSATION_TITLE)
     public String title;
-    @DatabaseField(canBeNull = false, unique = true)
+    @DatabaseField(canBeNull = false, unique = true, columnName = CONVERSATION_LINK)
     public String link;
 
-    @ForeignCollectionField(eager = true)
+    @ForeignCollectionField()
     public ForeignCollection<Task> conversationTasks;
+
+    @ForeignCollectionField()
+    public ForeignCollection<Task> conversationMessages;
 
     public Conversation() {}
     public Conversation(String title, String link) {

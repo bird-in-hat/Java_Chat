@@ -6,17 +6,17 @@ import com.j256.ormlite.table.DatabaseTable;
 import java.util.Date;
 
 @DatabaseTable(tableName = "messages")
-public class Message
-{
-    @DatabaseField(generatedId = true)
+public class Message {
+
+    @DatabaseField(generatedId = true, columnName = "id")
     public int id;
-    @DatabaseField()
+    @DatabaseField(columnName = "text")
     public String text;
-    @DatabaseField(canBeNull = false, foreign = true)
+    @DatabaseField(canBeNull = false, foreign = true, columnName = "user")
     public User user;
-    @DatabaseField(canBeNull = false, foreign = true)
+    @DatabaseField(canBeNull = false, foreign = true, columnName = "conversation")
     public Conversation conversation;
-    @DatabaseField(dataType = DataType.DATE_STRING)
+    @DatabaseField(dataType = DataType.DATE_STRING, columnName = "time")
     public Date time;
 
     public Message() {}

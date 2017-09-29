@@ -17,15 +17,19 @@ public class TCPServer {
             System.out.println("Hello World!");
             int serverPort = 1234; // the server port
             listenSocket = new ServerSocket(serverPort); // new server port generated
-            dbTest();
-            while(true) {
-                Socket clientSocket = listenSocket.accept(); // listen for new connection
-                ConnectionInServer ci = new ConnectionInServer(clientSocket); // launch new thread
-                System.out.println("Hello World!");
+
+            ConnectionSource cs = new JdbcConnectionSource("jdbc:sqlite:test.sqlite3");
+            ChatTables ct = new ChatTables(cs);
+            synchronized (cs) {
+                while (true) {
+                    Socket clientSocket = listenSocket.accept(); // listen for new connection
+                    ConnectionInServer ci = new ConnectionInServer(clientSocket, ct); // launch new thread
+                    System.out.println("Hello World!");
+                }
             }
         }
         catch (IOException e) { System.out.println("Listen socket:"+e.getMessage());}
-        catch (SQLException e) { System.out.println("Cannot connect to db:"+e.getMessage());}
+        catch (SQLException e) { System.out.println("cannot connect to ConnectionSource"+e.getMessage());}
         finally {
             if (listenSocket != null)
                 try {
@@ -33,7 +37,7 @@ public class TCPServer {
                 } catch (IOException e) { System.out.println("Close Socket:"+e.getMessage());}
         }
     }
-
+    /*
     private static void dbTest() throws SQLException, java.io.IOException {
         ConnectionSource cs = new JdbcConnectionSource("jdbc:sqlite:test2.sqlite3");
 
@@ -43,17 +47,7 @@ public class TCPServer {
         Dao<Conversation, Integer> convDao = DaoManager.createDao(cs, Conversation.class);
         Dao<Message, Integer> msgDao = DaoManager.createDao(cs, Message.class);
 
-        TableUtils.dropTable(cs, User.class, true);
-        TableUtils.dropTable(cs, UserConversation.class, true);
-        TableUtils.dropTable(cs, Task.class, true);
-        TableUtils.dropTable(cs, Conversation.class, true);
-        TableUtils.dropTable(cs, Message.class, true);
 
-        TableUtils.createTableIfNotExists(cs, User.class);
-        TableUtils.createTableIfNotExists(cs, UserConversation.class);
-        TableUtils.createTableIfNotExists(cs, Task.class);
-        TableUtils.createTableIfNotExists(cs, Conversation.class);
-        TableUtils.createTableIfNotExists(cs, Message.class);
 
         User ue = new User("Ezhi", "123");
         User up = new User("Petruchio", "321");
@@ -74,7 +68,9 @@ public class TCPServer {
         for (User u : list_of_users) {
             System.out.println(u.login + ": " + u.password);
         }
+
     }
+    */
 
 }
 // 10.0.16.83
