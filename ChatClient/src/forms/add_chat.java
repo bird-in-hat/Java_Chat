@@ -1,7 +1,8 @@
 package forms;
 
 import javax.swing.*;
-import src.*;
+import nodes.*;
+import src.ConnectionOutClient;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

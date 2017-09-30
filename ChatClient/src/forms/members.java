@@ -1,10 +1,8 @@
 package forms;
 
 import javax.swing.*;
-import src.*;
-
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import nodes.*;
+import src.ConnectionOutClient;
 
 public class members extends JFrame {
     private JList list_members;

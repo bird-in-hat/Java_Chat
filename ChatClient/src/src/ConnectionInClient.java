@@ -4,41 +4,42 @@ import java.net.*;
 import javax.swing.*;
 import forms.*;
 import java.util.ArrayList;
+import nodes.*;
 
 
 public class ConnectionInClient extends Thread {
 
-	ObjectInputStream  in;
-	Socket clientSocket;
+    ObjectInputStream  in;
+    Socket clientSocket;
     ConnectionOutClient out;
 
     ArrayList<JFrame> FramesList; // in parameters
     public ConnectionInClient (Socket ClientSocket_, ConnectionOutClient out_, ArrayList<JFrame> FramesList_) {
-		try {
-			clientSocket = ClientSocket_;
+        try {
+            clientSocket = ClientSocket_;
             out = out_;
-			in = new ObjectInputStream ( clientSocket.getInputStream());
+            in = new ObjectInputStream (clientSocket.getInputStream());
             FramesList = FramesList_;
-			this.start();
-		} catch(IOException e){System.out.println("Connection:"+e.getMessage());
-		}
-	}
+            this.start();
+        } catch(IOException e){System.out.println("Connection:"+e.getMessage());
+        }
+    }
 
-	public void run() { // an echo server
-		try {
+    public void run() { // an echo server
+        try {
             ClientHandler ch;
             MessageObject mo = null;
-			while(true) {
+            while(true) {
                 while ((mo = (MessageObject) in.readObject()) == null) {}
                 ch = new ClientHandler(mo);
                 if (mo.code == 0)
-                   break;
+                    break;
                 mo = null;
             }
-		} catch (EOFException e){System.out.println("EOF:"+e.getMessage());
-		} catch (IOException e) {System.out.println("readline:"+e.getMessage());
-		} catch (ClassNotFoundException e) { System.out.println("NULL:"+e.getMessage()); }
-	}
+        } catch (EOFException e){System.out.println("EOF:"+e.getMessage());
+        } catch (IOException e) {System.out.println("readline:"+e.getMessage());
+        } catch (ClassNotFoundException e) { System.out.println("NULL:"+e.getMessage()); }
+    }
 
     public class ClientHandler extends Thread{
 
@@ -143,5 +144,5 @@ public class ConnectionInClient extends Thread {
             }
         }
 
-        }
+    }
 }

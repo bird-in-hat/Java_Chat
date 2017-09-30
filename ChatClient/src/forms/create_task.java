@@ -1,7 +1,8 @@
 package forms;
 
 import javax.swing.*;
-import src.*;
+import nodes.*;
+import src.ConnectionOutClient;
 
 public class create_task extends JFrame{
     private JList list_members;

@@ -7,6 +7,7 @@ import com.j256.ormlite.stmt.QueryBuilder;
 import java.util.List;
 
 import java.sql.SQLException;
+import nodes.*;
 
 public class ChatTables {
 

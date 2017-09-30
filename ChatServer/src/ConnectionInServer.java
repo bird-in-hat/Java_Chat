@@ -3,30 +3,29 @@ import db_classes.User;
 import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
+import nodes.*;
 
 
 class ConnectionInServer extends Thread {
 
     ObjectInputStream  in;
-    ObjectOutputStream  out;
-    Socket serverSocket;
+    ConnectionOutServer  cos;
+    Socket clientSocket;
     String global_user_login;
     ChatTables ct;
-    ArrayList<ObjectOutputStream> outList;
+    ArrayList<ConnectionOutServer> outList;
 
-    public ConnectionInServer (Socket serverSocket_, ChatTables ct_, ArrayList<ObjectOutputStream> outList_) {
+    public ConnectionInServer (Socket clientSocket_, ChatTables ct_, ArrayList<ConnectionOutServer> outList_,
+                               ConnectionOutServer cos_) {
+        clientSocket = clientSocket_;
+        in = null;
+        ct = ct_;
+        cos = cos_;
         try {
-            serverSocket = serverSocket_;
-            in = new ObjectInputStream ( serverSocket.getInputStream());
-            ct = ct_;
-            outList = outList_;
-            synchronized(out) {
-                out = new ObjectOutputStream(serverSocket.getOutputStream());
-                outList.add(out);
-                this.start();
-            }
-        } catch(IOException e){System.out.println("Connection:"+e.getMessage());
-        }
+            in = new ObjectInputStream(clientSocket.getInputStream()); // error then get two streams (I\O)
+        }catch (IOException e) {System.out.println("new ObjectInputStream:"+e.getMessage());}
+        this.start();
+
     }
 
     public void run() { // an echo server
@@ -34,34 +33,15 @@ class ConnectionInServer extends Thread {
             MessageObject mo = null;
             ServerHandler sh;
             while(true) {
-                while ((mo = (MessageObject) in.readObject()) == null) {}
+                mo = (MessageObject) in.readObject();
                 sh = new ServerHandler(new MessageObject(mo));
                 if (mo.code == -1)
                     break;
                 mo = null;
             }
-        } catch (EOFException e){System.out.println("EOF:"+e.getMessage());
-        } catch (IOException e) {System.out.println("readline:"+e.getMessage());
-        } catch (ClassNotFoundException e) { System.out.println("NULL:"+e.getMessage());
-        }
-    }
-
-    class SendMessageObject extends Thread {
-
-        ObjectOutputStream  out_;
-        MessageObject message_;
-
-        SendMessageObject(MessageObject message, ObjectOutputStream  out){
-            out_ = out;
-            message_ = message;
-            this.start();
-        }
-
-        public void run(){
-            try {
-                out_.writeObject(message_);
-            } catch (IOException e) {System.out.println("Cannot send message to client:"+e.getMessage());
-            }
+        } catch (EOFException e){System.out.println("EOF:"+e.getMessage()); e.printStackTrace(System.out);
+        } catch (IOException e) {System.out.println("ConnectionInServer run():"+e.getMessage());
+        } catch (ClassNotFoundException e) { System.out.println("ClassNotFoundException:"+e.getMessage()); e.printStackTrace();
         }
     }
 
@@ -127,9 +107,8 @@ class ConnectionInServer extends Thread {
                 in.close();
                 MessageObject mo = new MessageObject();
                 mo.code = 0;
-                new SendMessageObject(mo, out);
-                outList.remove(out);
-                out.close();
+                cos.SendMessage(mo);
+                outList.remove(cos);
             } catch (IOException e) { System.out.println("readline:"+e.getMessage());}
         }
 
@@ -153,7 +132,7 @@ class ConnectionInServer extends Thread {
                 mo.code = 100;
                 mo.info.text1 = "Login not found. Create new account";
             }
-            new SendMessageObject(mo, out);
+            cos.SendMessage(mo);
             // сохранить логин юзера или id для дальнейшего использования
         }
 
@@ -171,7 +150,7 @@ class ConnectionInServer extends Thread {
                 mo.code = 21; // ввести лог пасс
                 mo.info.text1 = user_login;
             }
-            new SendMessageObject(mo, out);
+            cos.SendMessage(mo);
         }
 
         public void Open_conversation(MessageNode chat_info) {
@@ -184,14 +163,14 @@ class ConnectionInServer extends Thread {
             mo.code = 51;
             mo.info.text1 = conv_title;
             mo.info.text2 = conv_link;
-            new SendMessageObject(mo, out);
+            cos.SendMessage(mo);
         }
 
         public void Send_conv_list() {
             MessageObject mo = new MessageObject();
             mo.code = 41;
             mo.texts = ct.getConversations(global_user_login);
-            new SendMessageObject(mo, out);
+            cos.SendMessage(mo);
         }
 
         public void Join_conversation(MessageNode chat_info) {
@@ -210,7 +189,7 @@ class ConnectionInServer extends Thread {
                     return;
                 }
             }
-            new SendMessageObject(mo, out);
+            cos.SendMessage(mo);
         }
 
         public void Create_conversation(MessageNode chat_info) {
@@ -225,14 +204,14 @@ class ConnectionInServer extends Thread {
                 mo.code = 100;
                 mo.info.text1 = "Conversation with your link is already exist";
             }
-            new SendMessageObject(mo, out);
+            cos.SendMessage(mo);
         }
 
         public void Get_members(MessageNode chat_info) {
             MessageObject mo = new MessageObject();
             mo.code = 72;
             mo.texts = ct.getMembers(chat_info.text1);
-            new SendMessageObject(mo, out);
+            cos.SendMessage(mo);
         }
 
         public void Broadcast_message(MessageNode chat_info) {
@@ -247,8 +226,8 @@ class ConnectionInServer extends Thread {
             mo.texts = new MessageNode[1];
             mo.texts[0].text1 = sender;
             mo.texts[0].text2 = text;
-            for (ObjectOutputStream os: outList){
-                new SendMessageObject(mo, os);
+            for (ConnectionOutServer cos_: outList){
+                cos_.SendMessage(mo);
             }
             // для всех открытых соединений разослать mo new SendMessageObject(mo)
         }

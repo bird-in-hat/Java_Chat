@@ -4,7 +4,8 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import src.*;
+import nodes.*;
+import src.ConnectionOutClient;
 
 public class login extends JFrame {
 

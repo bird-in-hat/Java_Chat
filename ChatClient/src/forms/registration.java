@@ -5,7 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.security.MessageDigest;
 import java.util.Arrays;
-import src.*;
+import nodes.*;
+import src.ConnectionOutClient;
 
 public class registration extends JFrame {
     private JTextField textField_login;
