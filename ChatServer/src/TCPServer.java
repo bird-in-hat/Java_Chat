@@ -8,7 +8,7 @@ import db_classes.*;
 import java.net.*;
 import java.io.*;
 import java.sql.SQLException;
-import java.util.List;
+import java.util.ArrayList;
 
 public class TCPServer {
     public static void main (String args[]) {
@@ -20,10 +20,11 @@ public class TCPServer {
 
             ConnectionSource cs = new JdbcConnectionSource("jdbc:sqlite:test.sqlite3");
             ChatTables ct = new ChatTables(cs);
+            ArrayList<ObjectOutputStream> outList = new ArrayList<ObjectOutputStream>();
             synchronized (ct) {
                 while (true) {
                     Socket clientSocket = listenSocket.accept(); // listen for new connection
-                    ConnectionInServer ci = new ConnectionInServer(clientSocket, ct); // launch new thread
+                    ConnectionInServer ci = new ConnectionInServer(clientSocket, ct, outList); // launch new thread
                     System.out.println("Hello World!");
                 }
             }

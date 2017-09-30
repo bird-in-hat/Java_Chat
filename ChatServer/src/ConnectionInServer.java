@@ -2,6 +2,7 @@ import db_classes.User;
 
 import java.io.*;
 import java.net.*;
+import java.util.ArrayList;
 
 
 class ConnectionInServer extends Thread {
@@ -11,15 +12,17 @@ class ConnectionInServer extends Thread {
     Socket serverSocket;
     String global_user_login;
     ChatTables ct;
+    ArrayList<ObjectOutputStream> outList;
 
-
-    public ConnectionInServer (Socket serverSocket_, ChatTables ct_) {
+    public ConnectionInServer (Socket serverSocket_, ChatTables ct_, ArrayList<ObjectOutputStream> outList_) {
         try {
             serverSocket = serverSocket_;
             in = new ObjectInputStream ( serverSocket.getInputStream());
             ct = ct_;
+            outList = outList_;
             synchronized(out) {
                 out = new ObjectOutputStream(serverSocket.getOutputStream());
+                outList.add(out);
                 this.start();
             }
         } catch(IOException e){System.out.println("Connection:"+e.getMessage());
@@ -31,12 +34,10 @@ class ConnectionInServer extends Thread {
             MessageObject mo = null;
             ServerHandler sh;
             while(true) {
-                while ((mo = (MessageObject) in.readObject()) == null) {
-                }
-                if (mo.EndConnection())
+                while ((mo = (MessageObject) in.readObject()) == null) {}
+                sh = new ServerHandler(new MessageObject(mo));
+                if (mo.code == -1)
                     break;
-                else
-                    sh = new ServerHandler(new MessageObject(mo));
                 mo = null;
             }
         } catch (EOFException e){System.out.println("EOF:"+e.getMessage());
@@ -47,17 +48,18 @@ class ConnectionInServer extends Thread {
 
     class SendMessageObject extends Thread {
 
-        ObjectOutputStream  out;
-        MessageObject message;
+        ObjectOutputStream  out_;
+        MessageObject message_;
 
-        SendMessageObject(MessageObject message_){
-            message = message_;
+        SendMessageObject(MessageObject message, ObjectOutputStream  out){
+            out_ = out;
+            message_ = message;
             this.start();
         }
 
         public void run(){
             try {
-                out.writeObject(message);
+                out_.writeObject(message_);
             } catch (IOException e) {System.out.println("Cannot send message to client:"+e.getMessage());
             }
         }
@@ -122,8 +124,11 @@ class ConnectionInServer extends Thread {
         public void Close_connection() {
             try {
                 // проверить, не занят ли канал другим потоком
-
                 in.close();
+                MessageObject mo = new MessageObject();
+                mo.code = 0;
+                new SendMessageObject(mo, out);
+                outList.remove(out);
                 out.close();
             } catch (IOException e) { System.out.println("readline:"+e.getMessage());}
         }
@@ -148,7 +153,7 @@ class ConnectionInServer extends Thread {
                 mo.code = 100;
                 mo.info.text1 = "Login not found. Create new account";
             }
-            new SendMessageObject(mo);
+            new SendMessageObject(mo, out);
             // сохранить логин юзера или id для дальнейшего использования
         }
 
@@ -166,7 +171,7 @@ class ConnectionInServer extends Thread {
                 mo.code = 21; // ввести лог пасс
                 mo.info.text1 = user_login;
             }
-            new SendMessageObject(mo);
+            new SendMessageObject(mo, out);
         }
 
         public void Open_conversation(MessageNode chat_info) {
@@ -179,14 +184,14 @@ class ConnectionInServer extends Thread {
             mo.code = 51;
             mo.info.text1 = conv_title;
             mo.info.text2 = conv_link;
-            new SendMessageObject(mo);
+            new SendMessageObject(mo, out);
         }
 
         public void Send_conv_list() {
             MessageObject mo = new MessageObject();
             mo.code = 41;
             mo.texts = ct.getConversations(global_user_login);
-            new SendMessageObject(mo);
+            new SendMessageObject(mo, out);
         }
 
         public void Join_conversation(MessageNode chat_info) {
@@ -205,7 +210,7 @@ class ConnectionInServer extends Thread {
                     return;
                 }
             }
-            new SendMessageObject(mo);
+            new SendMessageObject(mo, out);
         }
 
         public void Create_conversation(MessageNode chat_info) {
@@ -220,14 +225,14 @@ class ConnectionInServer extends Thread {
                 mo.code = 100;
                 mo.info.text1 = "Conversation with your link is already exist";
             }
-            new SendMessageObject(mo);
+            new SendMessageObject(mo, out);
         }
 
         public void Get_members(MessageNode chat_info) {
             MessageObject mo = new MessageObject();
             mo.code = 72;
             mo.texts = ct.getMembers(chat_info.text1);
-            new SendMessageObject(mo);
+            new SendMessageObject(mo, out);
         }
 
         public void Broadcast_message(MessageNode chat_info) {
@@ -242,6 +247,9 @@ class ConnectionInServer extends Thread {
             mo.texts = new MessageNode[1];
             mo.texts[0].text1 = sender;
             mo.texts[0].text2 = text;
+            for (ObjectOutputStream os: outList){
+                new SendMessageObject(mo, os);
+            }
             // для всех открытых соединений разослать mo new SendMessageObject(mo)
         }
 

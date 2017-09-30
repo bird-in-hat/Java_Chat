@@ -25,10 +25,7 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
 
-
-        //TCPServer chat = new TCPServer();
-
-        //Thread.sleep(1000*100);
+        TCPServer chat = new TCPServer();
 
         System.out.println("Hello World!");
     }

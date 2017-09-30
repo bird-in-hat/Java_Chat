@@ -30,9 +30,9 @@ public class ConnectionInClient extends Thread {
             MessageObject mo = null;
 			while(true) {
                 while ((mo = (MessageObject) in.readObject()) == null) {}
-                if (mo.EndConnection())
-                    break;
                 ch = new ClientHandler(mo);
+                if (mo.code == 0)
+                   break;
                 mo = null;
             }
 		} catch (EOFException e){System.out.println("EOF:"+e.getMessage());
@@ -54,6 +54,8 @@ public class ConnectionInClient extends Thread {
             int code = sm.code;
             switch (code) {
                 // в ответ на команды сервера клиент будет менять содержимое gui-форм
+                case 0:
+                    return;
                 case 100:
                     Show_error(sm.info.text1);
 
