@@ -21,16 +21,14 @@ public class TCPServer {
 
             ConnectionSource cs = new JdbcConnectionSource("jdbc:sqlite:test.sqlite3");
             ChatTables ct = new ChatTables(cs);
-            ArrayList<ConnectionOutServer> outList = new ArrayList<ConnectionOutServer>();
+            ArrayList<ObjectOutputStream> outList = new ArrayList<ObjectOutputStream>();
             //synchronized (ct) {
                 while (true) {
                     Socket clientSocket = listenSocket.accept(); // listen for new connection
-                    ConnectionOutServer cos = new ConnectionOutServer(clientSocket);
-                    //ConnectionOutServer cos = null;
-                    ConnectionInServer ci = new ConnectionInServer(clientSocket, ct, outList, cos); // launch new thread
-                    System.out.println("Hello World!");
-              //  }
-            }
+                    new ConnectionInServer(clientSocket, ct, outList); // launch new thread
+                    System.out.println("New client");
+               }
+            //}
         }
         catch (IOException e) { System.out.println("Listen socket:"+e.getMessage());}
         catch (SQLException e) { System.out.println("cannot connect to ConnectionSource"+e.getMessage());}
@@ -41,5 +39,8 @@ public class TCPServer {
                 } catch (IOException e) { System.out.println("Close Socket:"+e.getMessage());}
         }
     }
+
+    public TCPServer() {main(null);}
+
 }
 // 10.0.16.83

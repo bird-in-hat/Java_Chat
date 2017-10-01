@@ -9,31 +9,32 @@ import nodes.*;
 class ConnectionInServer extends Thread {
 
     ObjectInputStream  in;
-    ConnectionOutServer  cos;
+    ObjectOutputStream out;
     Socket clientSocket;
     String global_user_login;
     ChatTables ct;
-    ArrayList<ConnectionOutServer> outList;
+    ArrayList<ObjectOutputStream> outList;
 
-    public ConnectionInServer (Socket clientSocket_, ChatTables ct_, ArrayList<ConnectionOutServer> outList_,
-                               ConnectionOutServer cos_) {
+    public ConnectionInServer (Socket clientSocket_, ChatTables ct_, ArrayList<ObjectOutputStream> outList_) {
         clientSocket = clientSocket_;
-        in = null;
         ct = ct_;
-        cos = cos_;
+        outList = outList_;
         try {
-            in = new ObjectInputStream(clientSocket.getInputStream()); // error then get two streams (I\O)
-        }catch (IOException e) {System.out.println("new ObjectInputStream:"+e.getMessage());}
+            in = new ObjectInputStream(clientSocket.getInputStream());
+            out = new ObjectOutputStream(clientSocket.getOutputStream());
+        } catch (IOException e) { System.out.println("ConnectionInServer constr:"+e.getMessage()); e.printStackTrace(System.out);}
         this.start();
 
     }
 
     public void run() { // an echo server
         try {
-            MessageObject mo = null;
+            MessageObject mo;
             ServerHandler sh;
             while(true) {
+                String message = System.console().readLine();
                 mo = (MessageObject) in.readObject();
+                message = System.console().readLine();
                 sh = new ServerHandler(new MessageObject(mo));
                 if (mo.code == -1)
                     break;
@@ -52,6 +53,16 @@ class ConnectionInServer extends Thread {
         ServerHandler(MessageObject cm_) {
             cm = cm_;
             this.start();
+        }
+
+        public void SendMessage(ObjectOutputStream out_, MessageObject mo_) {
+            try {
+                out_.writeObject(mo_);
+                out_.flush();
+            } catch (IOException e) {
+                System.out.println("SendMessage "+ mo_.code +e.getMessage());
+                e.printStackTrace(System.out);
+            }
         }
 
         public void run() {
@@ -107,8 +118,8 @@ class ConnectionInServer extends Thread {
                 in.close();
                 MessageObject mo = new MessageObject();
                 mo.code = 0;
-                cos.SendMessage(mo);
-                outList.remove(cos);
+                SendMessage(out, mo);
+                outList.remove(out);
             } catch (IOException e) { System.out.println("readline:"+e.getMessage());}
         }
 
@@ -132,7 +143,7 @@ class ConnectionInServer extends Thread {
                 mo.code = 100;
                 mo.info.text1 = "Login not found. Create new account";
             }
-            cos.SendMessage(mo);
+            SendMessage(out, mo);
             // сохранить логин юзера или id для дальнейшего использования
         }
 
@@ -150,7 +161,7 @@ class ConnectionInServer extends Thread {
                 mo.code = 21; // ввести лог пасс
                 mo.info.text1 = user_login;
             }
-            cos.SendMessage(mo);
+            SendMessage(out, mo);
         }
 
         public void Open_conversation(MessageNode chat_info) {
@@ -163,14 +174,14 @@ class ConnectionInServer extends Thread {
             mo.code = 51;
             mo.info.text1 = conv_title;
             mo.info.text2 = conv_link;
-            cos.SendMessage(mo);
+            SendMessage(out, mo);
         }
 
         public void Send_conv_list() {
             MessageObject mo = new MessageObject();
             mo.code = 41;
             mo.texts = ct.getConversations(global_user_login);
-            cos.SendMessage(mo);
+            SendMessage(out, mo);
         }
 
         public void Join_conversation(MessageNode chat_info) {
@@ -189,7 +200,7 @@ class ConnectionInServer extends Thread {
                     return;
                 }
             }
-            cos.SendMessage(mo);
+            SendMessage(out, mo);
         }
 
         public void Create_conversation(MessageNode chat_info) {
@@ -204,14 +215,14 @@ class ConnectionInServer extends Thread {
                 mo.code = 100;
                 mo.info.text1 = "Conversation with your link is already exist";
             }
-            cos.SendMessage(mo);
+            SendMessage(out, mo);
         }
 
         public void Get_members(MessageNode chat_info) {
             MessageObject mo = new MessageObject();
             mo.code = 72;
             mo.texts = ct.getMembers(chat_info.text1);
-            cos.SendMessage(mo);
+            SendMessage(out, mo);
         }
 
         public void Broadcast_message(MessageNode chat_info) {
@@ -226,8 +237,8 @@ class ConnectionInServer extends Thread {
             mo.texts = new MessageNode[1];
             mo.texts[0].text1 = sender;
             mo.texts[0].text2 = text;
-            for (ConnectionOutServer cos_: outList){
-                cos_.SendMessage(mo);
+            for (ObjectOutputStream oos: outList){
+                SendMessage(oos, mo);
             }
             // для всех открытых соединений разослать mo new SendMessageObject(mo)
         }

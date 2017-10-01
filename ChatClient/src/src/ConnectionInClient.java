@@ -14,23 +14,25 @@ public class ConnectionInClient extends Thread {
     ConnectionOutClient out;
 
     ArrayList<JFrame> FramesList; // in parameters
-    public ConnectionInClient (Socket ClientSocket_, ConnectionOutClient out_, ArrayList<JFrame> FramesList_) {
+    public ConnectionInClient (Socket clientSocket_, ArrayList<JFrame> FramesList_) {
+        clientSocket = clientSocket_;
+        FramesList = FramesList_;
         try {
-            clientSocket = ClientSocket_;
-            out = out_;
-            in = new ObjectInputStream (clientSocket.getInputStream());
-            FramesList = FramesList_;
-            this.start();
-        } catch(IOException e){System.out.println("Connection:"+e.getMessage());
-        }
+            ObjectOutputStream oos = new ObjectOutputStream(clientSocket.getOutputStream());
+            out = new ConnectionOutClient(oos);
+            in = new ObjectInputStream(clientSocket.getInputStream());
+        } catch (IOException e) {System.out.println("Stream creation:"+e.getMessage()); }
+
+        this.start();
     }
 
     public void run() { // an echo server
         try {
             ClientHandler ch;
             MessageObject mo = null;
+            new login(out);
             while(true) {
-                while ((mo = (MessageObject) in.readObject()) == null) {}
+                mo = (MessageObject) in.readObject();
                 ch = new ClientHandler(mo);
                 if (mo.code == 0)
                     break;

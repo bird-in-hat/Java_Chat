@@ -1,8 +1,5 @@
 package src;
-import java.io.DataOutputStream;
-import java.io.EOFException;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import forms.login;
@@ -22,12 +19,8 @@ public class Main {
             int server_port = 7896;
             s = new Socket(server_ip, server_port);
             ArrayList<JFrame> FramesList = new ArrayList<JFrame>();
-            ConnectionOutClient out = new ConnectionOutClient(s);
             //synchronized(FramesList){
-               // synchronized(out){
-                    login l = new login(out);
-                    ConnectionInClient ci = new ConnectionInClient(s, out, FramesList); // есть поток обрабатывающий принятые сообщения
-             //   }
+                ConnectionInClient ci = new ConnectionInClient(s, FramesList);
             //}
         } catch (UnknownHostException e) {
             System.out.println("Socket:" + e.getMessage()); // host cannot be resolved
