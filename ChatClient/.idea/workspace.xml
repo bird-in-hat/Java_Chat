@@ -91,7 +91,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="registration.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="registration.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/forms/registration.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="210">
@@ -111,11 +111,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="chat_list.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="chat_list.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/forms/chat_list.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="98">
-              <caret line="22" column="0" lean-forward="false" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+            <state relative-caret-position="108">
+              <caret line="22" column="37" lean-forward="false" selection-start-line="22" selection-start-column="37" selection-end-line="22" selection-end-column="37" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -160,8 +160,8 @@
       <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/src/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="22" column="78" lean-forward="false" selection-start-line="22" selection-start-column="78" selection-end-line="22" selection-end-column="78" />
+            <state relative-caret-position="210">
+              <caret line="22" column="0" lean-forward="false" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -235,7 +235,6 @@
         <option value="$PROJECT_DIR$/src/src/MessageNode.java" />
         <option value="$PROJECT_DIR$/src/forms/add_chat.java" />
         <option value="$PROJECT_DIR$/src/forms/chat_form.java" />
-        <option value="$PROJECT_DIR$/src/forms/chat_list.java" />
         <option value="$PROJECT_DIR$/src/forms/create_task.java" />
         <option value="$PROJECT_DIR$/src/forms/join_chat.java" />
         <option value="$PROJECT_DIR$/src/forms/members.java" />
@@ -247,6 +246,7 @@
         <option value="$PROJECT_DIR$/src/src/ConnectionOutClient.java" />
         <option value="$PROJECT_DIR$/src/src/ConnectionInClient.java" />
         <option value="$PROJECT_DIR$/src/forms/registration.java" />
+        <option value="$PROJECT_DIR$/src/forms/chat_list.java" />
       </list>
     </option>
   </component>
@@ -977,12 +977,12 @@
       <workItem from="1506852865095" duration="693000" />
       <workItem from="1506858466075" duration="6288000" />
       <workItem from="1506936647712" duration="955000" />
-      <workItem from="1507044351880" duration="4024000" />
+      <workItem from="1507044351880" duration="4167000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="85343000" />
+    <option name="totallyTimeSpent" value="85486000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1007,7 +1007,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.08067227" sideWeight="0.50907713" order="9" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.36806723" sideWeight="0.49092284" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3647059" sideWeight="0.49092284" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32902467" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -1267,24 +1267,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/src/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="22" column="78" lean-forward="false" selection-start-line="22" selection-start-column="78" selection-end-line="22" selection-end-column="78" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/forms/chat_list.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="98">
-          <caret line="22" column="0" lean-forward="false" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/src/ConnectionOutClient.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="31">
@@ -1328,6 +1310,24 @@
         <state relative-caret-position="210">
           <caret line="39" column="20" lean-forward="true" selection-start-line="39" selection-start-column="20" selection-end-line="39" selection-end-column="20" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/src/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="22" column="0" lean-forward="false" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/forms/chat_list.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="22" column="37" lean-forward="false" selection-start-line="22" selection-start-column="37" selection-end-line="22" selection-end-column="37" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

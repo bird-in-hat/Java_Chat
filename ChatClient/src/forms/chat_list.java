@@ -20,6 +20,7 @@ public class chat_list extends JFrame{
 
 
     public void updateContent(MessageNode[] chats) {
+        if (chats == null) { return; }
         String[] titleList = new String[chats.length];
         link_list = new String[chats.length];
         for(int index = 0; index < chats.length; index++) {
