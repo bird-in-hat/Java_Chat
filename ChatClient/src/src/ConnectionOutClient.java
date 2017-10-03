@@ -17,7 +17,15 @@ public class ConnectionOutClient {
             out.writeObject(mo);
             out.flush();
         } catch (IOException e) {
-            System.out.println("ConnectionOutClient:"+e.getMessage());
+            System.out.println("ConnectionOutClient send:"+e.getMessage());
+        }
+    }
+
+    public void Destroy(){
+        try {
+            out.close();
+        }catch (IOException e) {
+            System.out.println("ConnectionOutClient destroy:"+e.getMessage());
         }
     }
 }

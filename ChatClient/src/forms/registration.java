@@ -40,7 +40,6 @@ public class registration extends JFrame {
                     mo.info.text1 = textField_login.getText();
                     mo.info.text2 = new String(passwordField_pass.getPassword());
                     out.SendMessage(mo);
-                    JOptionPane.showMessageDialog(FormsHelper.get_frame(e), "Sucess.");
                     dispose();
                 }
             }

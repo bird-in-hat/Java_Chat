@@ -10,14 +10,20 @@ public class MessageObject implements Serializable {
     public MessageNode info;
 
     public MessageObject() {
-        texts = null;
+        setDef();
+    }
+
+    private void setDef() {
+    	texts = null;
+        code = 0;
         info = new MessageNode();
     }
 
     public MessageObject (MessageObject other){
+    	setDef();
+    	if (other == null) System.out.println("other is null") ;
         code = other.code;
-        info = new MessageNode(other.info);
-        if (texts != null)
-            texts = other.texts.clone();
+        if (info != null) info = new MessageNode(other.info);
+        if (other.texts != null) texts = other.texts.clone();
     }
 }

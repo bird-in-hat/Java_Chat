@@ -32,14 +32,12 @@ class ConnectionInServer extends Thread {
             MessageObject mo;
             ServerHandler sh;
             while(true) {
-                String message = System.console().readLine();
                 mo = (MessageObject) in.readObject();
-                message = System.console().readLine();
-                sh = new ServerHandler(new MessageObject(mo));
-                if (mo.code == -1)
+                sh = new ServerHandler(mo);
+                if (mo.code == -1 || mo.code == 40)
                     break;
-                mo = null;
-            }
+            mo = null;
+        }
         } catch (EOFException e){System.out.println("EOF:"+e.getMessage()); e.printStackTrace(System.out);
         } catch (IOException e) {System.out.println("ConnectionInServer run():"+e.getMessage());
         } catch (ClassNotFoundException e) { System.out.println("ClassNotFoundException:"+e.getMessage()); e.printStackTrace();
@@ -60,7 +58,7 @@ class ConnectionInServer extends Thread {
                 out_.writeObject(mo_);
                 out_.flush();
             } catch (IOException e) {
-                System.out.println("SendMessage "+ mo_.code +e.getMessage());
+                System.out.println("SendMessage: "+ mo_.code +e.getMessage());
                 e.printStackTrace(System.out);
             }
         }
@@ -71,36 +69,43 @@ class ConnectionInServer extends Thread {
                 // клиент просит сервер сделать это:
                 case -1:
                     Close_connection(); // клиент завершил работу, просто закрыть соединение
-
+                    break;
                 case 21:
                     Check_login_password(cm.info); // log pass correct? нет - повторять бесконечно, до закрытия соединения
                     // да - показать список чатов
+                    break;
 
                 case 31:
                     User_sign_up(cm.info); // логин занят - перерегистрация, иначе отобразить пустой список чатов
-
+                    break;
                 case 40:
                     Close_connection(); // клиент завершил работу
-
+                    break;
                 case 41:
                     Open_conversation(cm.info); //chat; отправить содержимое чата
-
+                    break;
                 case 42:
                     Join_conversation(cm.info); //chat; добавить чат в список чатов юзера
+                    break;
                 case 43:
                     Send_conv_list();
+                    break;
                     // отправить юзеру список бесед
                 case 61:
                     Create_conversation(cm.info); // добавить в список участников чата создателя
+                    break;
                     // если ссылка уникальна, иначе сообщение об ошибке
 
                 case 71:
                     Broadcast_message(cm.info); // сообщение от юзера; записать сообщение в базу
+                    break;
                     // для всех участников беседы разослать новое сообщение (71)
                 case 74:
                     Get_members(cm.info);
+                    break;
                 case 73:
                     Leave_chat(cm.info); // удалить чат из списка чатов юзера
+                    break;
                     /*
                 case 72:
                     Create_task(cm.info, cm.texts[0]); // беседа, описание задачи
@@ -120,6 +125,7 @@ class ConnectionInServer extends Thread {
                 mo.code = 0;
                 SendMessage(out, mo);
                 outList.remove(out);
+                out.close();
             } catch (IOException e) { System.out.println("readline:"+e.getMessage());}
         }
 
@@ -135,12 +141,12 @@ class ConnectionInServer extends Thread {
                     mo.info.text1 = user_login;
                 }
                 else {
-                    mo.code = 100;
+                    mo.code = 21;
                     mo.info.text1 = "Incorrect password";
                 }
             }
             else {
-                mo.code = 100;
+                mo.code = 21;
                 mo.info.text1 = "Login not found. Create new account";
             }
             SendMessage(out, mo);

@@ -119,10 +119,10 @@ public class ChatTables {
 
     public boolean isPasswordCorrect(String login, String password){
         User u = getUser(login);
-        if (u.password.equals(password))
-            return true;
-        else
+        if (u == null || (!u.password.equals(password)))
             return false;
+        else
+            return true;
     }
 
     public MessageNode[] getMessages(String link) {

@@ -2,12 +2,14 @@ package src;
 import java.io.*;
 import java.net.*;
 import javax.swing.*;
+
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import forms.*;
 import java.util.ArrayList;
 import nodes.*;
 
 
-public class ConnectionInClient extends Thread {
+public class ConnectionInClient{
 
     ObjectInputStream  in;
     Socket clientSocket;
@@ -22,8 +24,7 @@ public class ConnectionInClient extends Thread {
             out = new ConnectionOutClient(oos);
             in = new ObjectInputStream(clientSocket.getInputStream());
         } catch (IOException e) {System.out.println("Stream creation:"+e.getMessage()); }
-
-        this.start();
+        this.run();
     }
 
     public void run() { // an echo server
@@ -43,41 +44,47 @@ public class ConnectionInClient extends Thread {
         } catch (ClassNotFoundException e) { System.out.println("NULL:"+e.getMessage()); }
     }
 
-    public class ClientHandler extends Thread{
+    public class ClientHandler{
 
         MessageObject sm;
 
         ClientHandler(MessageObject sm_) {
             sm = sm_;
-            this.start();
+            this.run();
         }
 
-        @Override
+        //@Override
         public void run() {
             int code = sm.code;
             switch (code) {
                 // в ответ на команды сервера клиент будет менять содержимое gui-форм
                 case 0:
+                    try {
+                        in.close();
+                        out.Destroy();
+                    }catch (IOException e) {System.out.println("disconnect:"+e.getMessage());}
                     return;
                 case 100:
                     Show_error(sm.info.text1);
-
+                    break;
                 case 21:
-                    Send_pass();
-
+                    Send_pass(sm.info.text1);
+                    break;
                 case 31:
                     Registration();
-
+                    break;
                 case 41:
                     Show_user_conversations(sm.texts);
-
+                    break;
                 case 51:
                     Show_conversation_content(sm.info, sm.texts); // название, id беседы; сообщения
-
+                    break;
                 case 71:
                     Update_conversation(sm.info, sm.texts); // название, id беседы;новое сообщение
+                    break;
                 case 72:
                     Show_conversation_members(sm.info, sm.texts);
+                    break;
 /*
                 case 730:
                     Show_conversation_task(sm.info, sm.texts[0]);
@@ -95,7 +102,9 @@ public class ConnectionInClient extends Thread {
             JOptionPane.showMessageDialog(frame, text);
         }
 
-        private void Send_pass() {
+        private void Send_pass(String s) {
+            if (s != null)
+                Show_error(s);
             new login(out);
         }
 
