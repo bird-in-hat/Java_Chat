@@ -215,7 +215,7 @@ class ConnectionInServer extends Thread {
                 ct.addConversation(chat_info.text1, chat_info.text2);
                 ct.joinConversation(global_user_login, chat_info.text2);
                 mo.code = 41;
-                mo.texts = ct.getConversations(global_user_login);
+                //mo.texts = ct.getConversations(global_user_login);
             }
             else{
                 mo.code = 100;

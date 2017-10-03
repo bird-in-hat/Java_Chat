@@ -15,6 +15,7 @@ public class chat_list extends JFrame{
     private JButton button_exit;
     private JButton button_join;
     private JButton button_refresh;
+    private JButton button_create;
     String[] link_list;
     JFrame currFrame;
 
@@ -32,7 +33,7 @@ public class chat_list extends JFrame{
     }
 
     public chat_list(ArrayList<JFrame> FramesList, ConnectionOutClient out, MessageNode[] chats) {
-        setSize(300, 200);
+        setSize(500, 300);
         this.setVisible(true);
         setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
         this.getContentPane().add(panel_chat_list);
@@ -84,6 +85,12 @@ public class chat_list extends JFrame{
                 mo.code = 40;
                 out.SendMessage(mo);
                 dispose();
+            }
+        });
+        button_create.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new add_chat(out);
             }
         });
     }
