@@ -24,6 +24,8 @@ public class chat_list extends JFrame{
             list_chat_list.updateUI();
             return;
         }
+        System.out.println(chats.toString());
+
         title_list = new String[chats.length];
         link_list = new String[chats.length];
         for(int index = 0; index < chats.length; index++) {
@@ -123,6 +125,7 @@ public class chat_list extends JFrame{
                     mo.code = 41;  // open conversation
                     mo.info.text1 = title_list[index];
                     mo.info.text2 = link_list[index];
+                    list_chat_list.setSelectedIndex(-1);
                     out.SendMessage(mo);
                 }
             }

@@ -20,19 +20,22 @@ public class chat_form extends JFrame{
     private JButton button_show_task;
     private JLabel label_conv_title;
     private Document doc;
+    private JFrame frame;
 
     public chat_form(ArrayList<JFrame> FramesList, ConnectionOutClient out, MessageNode info, MessageNode[] messages) {
-        setSize(400, 300);
+        setSize(400, 500);
         String conv_title = info.text1;
         String conv_link = info.text2;
         this.setVisible(true);
-        //setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE );
         this.getContentPane().add(panel_chat_from);
         this.setName("chat_form"+conv_link);
         label_conv_title.setText(conv_title);
         FramesList.add(this);
+        JScrollPane jsp = new JScrollPane(textPane_chat);
         doc = textPane_chat.getDocument();
         updateContent(messages);
+        frame = this;
 
         button_send.addActionListener(new ActionListener() {
             @Override
@@ -82,6 +85,14 @@ public class chat_form extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 JOptionPane.showMessageDialog(FormsHelper.get_frame(e), "Not implemented.");
+            }
+        });
+
+        this.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                FramesList.remove(frame);
+                frame = null;
             }
         });
 

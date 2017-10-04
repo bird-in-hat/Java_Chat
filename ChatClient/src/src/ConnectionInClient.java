@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import nodes.*;
 
 
-public class ConnectionInClient{
+public class ConnectionInClient {
 
     ObjectInputStream  in;
     Socket clientSocket;

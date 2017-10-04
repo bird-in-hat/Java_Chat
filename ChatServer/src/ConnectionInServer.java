@@ -200,6 +200,10 @@ class ConnectionInServer extends Thread {
             mo.code = 41;
             mo.texts = ct.getConversations(global_user_login);
             SendMessage(out, mo);
+            if (mo.texts != null)
+                System.out.println("SendMessage: "+ mo.code + mo.texts[0].text1);
+            else
+                System.out.println("SendMessage: "+ mo.code);
         }
 
         public void Join_conversation(MessageNode chat_info) {
@@ -214,7 +218,6 @@ class ConnectionInServer extends Thread {
                     mo.info.text1 = "You alreday in this conversation";
                 } else {
                     ct.joinConversation(global_user_login, chat_info.text1);
-                    Send_conv_list();
                     return;
                 }
             }
@@ -265,7 +268,6 @@ class ConnectionInServer extends Thread {
         public void Leave_chat(MessageNode chat_info) {
             String conv_link = chat_info.text1;
             ct.leaveConversation(global_user_login, conv_link);
-            Send_conv_list();
         }
 
     }
