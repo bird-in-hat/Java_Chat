@@ -16,10 +16,7 @@ public class chat_list extends JFrame{
     private JButton button_join;
     private JButton button_refresh;
     private JButton button_create;
-    private JScrollPane scroll_pane;
     String[] link_list;
-    JFrame currFrame;
-    DefaultListModel listModel;
 
     public void updateContent(MessageNode[] chats) {
         if (chats == null) { return; }
@@ -27,10 +24,9 @@ public class chat_list extends JFrame{
         link_list = new String[chats.length];
         for(int index = 0; index < chats.length; index++) {
             titleList[index] = chats[index].text1;
-            listModel.addElement(titleList[index]);
             link_list[index] = chats[index].text2;
         }
-        list_chat_list = new JList(listModel);
+        list_chat_list.setListData(titleList);
         list_chat_list.updateUI();
     }
 
@@ -41,10 +37,6 @@ public class chat_list extends JFrame{
         this.getContentPane().add(panel_chat_list);
         this.setName("chat_list");
         FramesList.add(this);
-
-        listModel = new DefaultListModel();
-        list_chat_list = new JList(listModel);
-        scroll_pane = new JScrollPane(list_chat_list);
 
         updateContent(chats);
 
