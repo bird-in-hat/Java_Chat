@@ -19,11 +19,13 @@ public class members extends JFrame {
     }
 
     public void updateContent(MessageNode[] node_members_list) {
-        DefaultListModel<String> model = new DefaultListModel<>();
-        list_members = new JList(model);
-        for(int index = 0; index < node_members_list.length; index++) {
-            model.addElement(node_members_list[index].text1);
+        String[] members_array = new String[node_members_list.length];
+
+        for(int i = 0; i < node_members_list.length; i++) {
+            members_array[i] = node_members_list[i].text1;
         }
+        list_members.removeAll();
+        list_members.setListData(members_array);
         list_members.updateUI();
     }
 }//+

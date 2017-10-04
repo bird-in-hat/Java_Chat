@@ -70,52 +70,61 @@
       <file leaf-file-name="ConnectionInClient.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/src/ConnectionInClient.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="151">
-              <caret line="131" column="0" lean-forward="false" selection-start-line="131" selection-start-column="0" selection-end-line="131" selection-end-column="0" />
+            <state relative-caret-position="213">
+              <caret line="117" column="20" lean-forward="false" selection-start-line="117" selection-start-column="20" selection-end-line="117" selection-end-column="20" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="chat_form.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="chat_form.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/forms/chat_form.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="266">
-              <caret line="95" column="45" lean-forward="false" selection-start-line="95" selection-start-column="45" selection-end-line="95" selection-end-column="45" />
+            <state relative-caret-position="583">
+              <caret line="95" column="45" lean-forward="true" selection-start-line="95" selection-start-column="45" selection-end-line="95" selection-end-column="45" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FormsHelper.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/forms/FormsHelper.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="17" column="0" lean-forward="false" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="chat_list.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="chat_list.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/forms/chat_list.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="208">
-              <caret line="85" column="36" lean-forward="true" selection-start-line="85" selection-start-column="36" selection-end-line="85" selection-end-column="36" />
+            <state relative-caret-position="312">
+              <caret line="120" column="66" lean-forward="false" selection-start-line="120" selection-start-column="66" selection-end-line="120" selection-end-column="66" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#2104#2105#0" expanded="true" />
-                <element signature="e#2154#2155#0" expanded="true" />
-                <element signature="e#3123#3124#0" expanded="true" />
-                <element signature="e#3172#3173#0" expanded="true" />
-                <element signature="e#3227#3413#0" expanded="true" />
-                <element signature="e#3412#3413#0" expanded="true" />
-                <element signature="e#3457#3640#0" expanded="true" />
-                <element signature="e#3639#3640#0" expanded="true" />
-                <element signature="e#3688#3689#0" expanded="true" />
-                <element signature="e#3725#3726#0" expanded="true" />
+                <element signature="e#2239#2240#0" expanded="true" />
+                <element signature="e#2289#2290#0" expanded="true" />
+                <element signature="e#3258#3259#0" expanded="true" />
+                <element signature="e#3307#3308#0" expanded="true" />
+                <element signature="e#3362#3548#0" expanded="true" />
+                <element signature="e#3547#3548#0" expanded="true" />
+                <element signature="e#3592#3775#0" expanded="true" />
+                <element signature="e#3774#3775#0" expanded="true" />
+                <element signature="e#3818#4424#0" expanded="true" />
+                <element signature="e#4423#4424#0" expanded="true" />
+                <element signature="e#4472#4473#0" expanded="true" />
+                <element signature="e#4509#4510#0" expanded="true" />
               </folding>
             </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="members.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/forms/members.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="442">
+              <caret line="28" column="32" lean-forward="true" selection-start-line="28" selection-start-column="32" selection-end-line="28" selection-end-column="32" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="members.form" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/forms/members.form">
+          <provider selected="true" editor-type-id="ui-designer">
+            <state />
           </provider>
         </entry>
       </file>
@@ -160,16 +169,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MessageNode.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/nodes/MessageNode.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="340">
-              <caret line="20" column="1" lean-forward="false" selection-start-line="20" selection-start-column="1" selection-end-line="20" selection-end-column="1" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
     </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
@@ -183,6 +182,7 @@
     <findStrings>
       <find>clientSocket</find>
       <find>FramesList</find>
+      <find>updateContent</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -221,7 +221,6 @@
         <option value="$PROJECT_DIR$/src/TCPClient.java" />
         <option value="$PROJECT_DIR$/src/forms/join_chat.form" />
         <option value="$PROJECT_DIR$/src/forms/create_task.form" />
-        <option value="$PROJECT_DIR$/src/forms/members.form" />
         <option value="$PROJECT_DIR$/src/forms/password.form" />
         <option value="$PROJECT_DIR$/src/forms/password.java" />
         <option value="$PROJECT_DIR$/src/ConnectionInClient.java" />
@@ -236,7 +235,6 @@
         <option value="$PROJECT_DIR$/src/src/MessageNode.java" />
         <option value="$PROJECT_DIR$/src/forms/create_task.java" />
         <option value="$PROJECT_DIR$/src/forms/join_chat.java" />
-        <option value="$PROJECT_DIR$/src/forms/members.java" />
         <option value="$USER_HOME$/Downloads/chat/chat_objects/Connection.java" />
         <option value="$PROJECT_DIR$/src/src/Main.java" />
         <option value="$PROJECT_DIR$/src/forms/login.java" />
@@ -246,10 +244,12 @@
         <option value="$PROJECT_DIR$/src/nodes/MessageObject.java" />
         <option value="$PROJECT_DIR$/src/nodes/MessageNode.java" />
         <option value="$PROJECT_DIR$/src/forms/chat_list.form" />
-        <option value="$PROJECT_DIR$/src/src/ConnectionInClient.java" />
         <option value="$PROJECT_DIR$/src/forms/add_chat.java" />
-        <option value="$PROJECT_DIR$/src/forms/chat_list.java" />
         <option value="$PROJECT_DIR$/src/forms/chat_form.java" />
+        <option value="$PROJECT_DIR$/src/forms/members.form" />
+        <option value="$PROJECT_DIR$/src/forms/members.java" />
+        <option value="$PROJECT_DIR$/src/src/ConnectionInClient.java" />
+        <option value="$PROJECT_DIR$/src/forms/chat_list.java" />
       </list>
     </option>
   </component>
@@ -495,7 +495,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="chat_list" />
+              <option name="myItemId" value="members" />
               <option name="myItemType" value="com.intellij.uiDesigner.projectView.FormNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -517,7 +517,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="add_chat" />
+              <option name="myItemId" value="chat_list" />
               <option name="myItemType" value="com.intellij.uiDesigner.projectView.FormNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -981,12 +981,12 @@
       <workItem from="1506858466075" duration="6288000" />
       <workItem from="1506936647712" duration="955000" />
       <workItem from="1507044351880" duration="6900000" />
-      <workItem from="1507109919985" duration="9730000" />
+      <workItem from="1507109919985" duration="14511000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="97949000" />
+    <option name="totallyTimeSpent" value="102730000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -999,7 +999,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1284" height="1010" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -1011,7 +1010,7 @@
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.08067227" sideWeight="0.50907713" order="9" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.40423033" sideWeight="0.49092284" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.35017627" sideWeight="0.49092284" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Properties" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32902467" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -1023,7 +1022,7 @@
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22087379" sideWeight="0.5050215" order="3" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.012925969" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.14688602" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -1087,8 +1086,14 @@
           <properties />
           <option name="timeStamp" value="8" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/src/ConnectionInClient.java</url>
+          <line>82</line>
+          <properties />
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
       </breakpoints>
-      <option name="time" value="9" />
+      <option name="time" value="18" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -1142,11 +1147,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/forms/join_chat.form">
-      <provider selected="true" editor-type-id="ui-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/forms/members.form">
       <provider selected="true" editor-type-id="ui-designer">
         <state />
       </provider>
@@ -1214,13 +1214,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/forms/members.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="4" column="31" lean-forward="false" selection-start-line="4" selection-start-column="31" selection-end-line="4" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/src/ConnectionOutClient.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="31">
@@ -1256,8 +1249,8 @@
         <state relative-caret-position="306">
           <caret line="20" column="0" lean-forward="true" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
           <folding>
-            <element signature="e#278#279#0" expanded="true" />
-            <element signature="e#302#303#0" expanded="true" />
+            <element signature="e#278#279#0" expanded="false" />
+            <element signature="e#302#303#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1278,11 +1271,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/forms/chat_form.form">
-      <provider selected="true" editor-type-id="ui-designer">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/forms/add_chat.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="289">
@@ -1296,31 +1284,6 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/forms/chat_list.form">
-      <provider selected="true" editor-type-id="ui-designer">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/forms/chat_list.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="208">
-          <caret line="85" column="36" lean-forward="true" selection-start-line="85" selection-start-column="36" selection-end-line="85" selection-end-column="36" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2104#2105#0" expanded="true" />
-            <element signature="e#2154#2155#0" expanded="true" />
-            <element signature="e#3123#3124#0" expanded="true" />
-            <element signature="e#3172#3173#0" expanded="true" />
-            <element signature="e#3227#3413#0" expanded="true" />
-            <element signature="e#3412#3413#0" expanded="true" />
-            <element signature="e#3457#3640#0" expanded="true" />
-            <element signature="e#3639#3640#0" expanded="true" />
-            <element signature="e#3688#3689#0" expanded="true" />
-            <element signature="e#3725#3726#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/src/Main.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="151">
@@ -1329,19 +1292,64 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/forms/members.form">
+      <provider selected="true" editor-type-id="ui-designer">
+        <state />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/src/ConnectionInClient.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="151">
-          <caret line="131" column="0" lean-forward="false" selection-start-line="131" selection-start-column="0" selection-end-line="131" selection-end-column="0" />
+        <state relative-caret-position="213">
+          <caret line="117" column="20" lean-forward="false" selection-start-line="117" selection-start-column="20" selection-end-line="117" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/forms/members.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="28" column="32" lean-forward="true" selection-start-line="28" selection-start-column="32" selection-end-line="28" selection-end-column="32" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/forms/chat_form.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="266">
-          <caret line="95" column="45" lean-forward="false" selection-start-line="95" selection-start-column="45" selection-end-line="95" selection-end-column="45" />
+        <state relative-caret-position="583">
+          <caret line="95" column="45" lean-forward="true" selection-start-line="95" selection-start-column="45" selection-end-line="95" selection-end-column="45" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/forms/chat_form.form">
+      <provider selected="true" editor-type-id="ui-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/forms/chat_list.form">
+      <provider selected="true" editor-type-id="ui-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/forms/chat_list.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="312">
+          <caret line="120" column="66" lean-forward="false" selection-start-line="120" selection-start-column="66" selection-end-line="120" selection-end-column="66" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2239#2240#0" expanded="true" />
+            <element signature="e#2289#2290#0" expanded="true" />
+            <element signature="e#3258#3259#0" expanded="true" />
+            <element signature="e#3307#3308#0" expanded="true" />
+            <element signature="e#3362#3548#0" expanded="true" />
+            <element signature="e#3547#3548#0" expanded="true" />
+            <element signature="e#3592#3775#0" expanded="true" />
+            <element signature="e#3774#3775#0" expanded="true" />
+            <element signature="e#3818#4424#0" expanded="true" />
+            <element signature="e#4423#4424#0" expanded="true" />
+            <element signature="e#4472#4473#0" expanded="true" />
+            <element signature="e#4509#4510#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

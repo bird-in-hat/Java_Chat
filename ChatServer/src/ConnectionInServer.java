@@ -14,8 +14,11 @@ class ConnectionInServer extends Thread {
     String global_user_login;
     ChatTables ct;
     ArrayList<ObjectOutputStream> outList;
+    ArrayList<String> onlineUsers;
 
-    public ConnectionInServer (Socket clientSocket_, ChatTables ct_, ArrayList<ObjectOutputStream> outList_) {
+    public ConnectionInServer (Socket clientSocket_, ChatTables ct_, ArrayList<ObjectOutputStream> outList_,
+                               ArrayList<String> onlineUsers_ ) {
+        onlineUsers = onlineUsers_;
         clientSocket = clientSocket_;
         ct = ct_;
         outList = outList_;
@@ -29,6 +32,7 @@ class ConnectionInServer extends Thread {
 
     public void run() { // an echo server
         try {
+            outList.add(out);
             MessageObject mo;
             ServerHandler sh;
             while(true) {
@@ -36,11 +40,16 @@ class ConnectionInServer extends Thread {
                 sh = new ServerHandler(mo);
                 if (mo.code == -1 || mo.code == 40)
                     break;
-            mo = null;
-        }
+                mo = null;
+            }
+            onlineUsers.remove(global_user_login);
+            outList.remove(out);
+            out.close();
         } catch (EOFException e){System.out.println("EOF:"+e.getMessage()); e.printStackTrace(System.out);
         } catch (IOException e) {System.out.println("ConnectionInServer run():"+e.getMessage());
         } catch (ClassNotFoundException e) { System.out.println("ClassNotFoundException:"+e.getMessage()); e.printStackTrace();
+        } finally {
+            onlineUsers.remove(global_user_login);
         }
     }
 
@@ -121,11 +130,6 @@ class ConnectionInServer extends Thread {
             try {
                 // проверить, не занят ли канал другим потоком
                 in.close();
-                MessageObject mo = new MessageObject();
-                mo.code = 0;
-                SendMessage(out, mo);
-                outList.remove(out);
-                out.close();
             } catch (IOException e) { System.out.println("readline:"+e.getMessage());}
         }
 
@@ -133,12 +137,20 @@ class ConnectionInServer extends Thread {
             String user_login = info.text1;
             String user_password = info.text2;
 
+
             MessageObject mo = new MessageObject();
-            if (ct.isUserExist(user_login)){
+            if (onlineUsers.contains(user_login)){
+                mo.code = 21;
+                mo.info.text1 = "User already online";
+                SendMessage(out, mo);
+                return;
+            }
+            if (ct.isUserExist(user_login) ){
                 if (ct.isPasswordCorrect(user_login, user_password)){
                     mo.code = 41;
                     global_user_login = user_login;
                     mo.info.text1 = user_login;
+                    onlineUsers.add(global_user_login);
                 }
                 else {
                     mo.code = 21;

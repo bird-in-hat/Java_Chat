@@ -173,22 +173,25 @@ public class ChatTables {
     public MessageNode[] getMembers(String link) {
         List<UserConversation> conversation_usersList = null;
         try {
-            Conversation c = getConversation(link);
-            QueryBuilder<UserConversation, Integer> queryBuilder =
-                    userConvDao.queryBuilder();
-            conversation_usersList = userConvDao.query(queryBuilder.where().eq("conversation", c).prepare());
+                Conversation c = getConversation(link);
+                QueryBuilder<UserConversation, Integer> queryBuilder =
+                        userConvDao.queryBuilder();
+                conversation_usersList = userConvDao.queryForEq("conversation", c);
+
+            if (conversation_usersList == null || conversation_usersList.isEmpty())
+                return null;
+            // else
+            MessageNode[] mn = new MessageNode[conversation_usersList.size()];
+            int i = 0;
+            for(UserConversation uc: conversation_usersList){
+                mn[i] = new MessageNode();
+                User u = userDao.queryForId(uc.user.id);
+                mn[i].text1 = u.login;
+                i++;
+            }
+            return mn;
         } catch (SQLException e){System.out.println("getMembers "+e.getMessage());}
-        if (conversation_usersList == null || conversation_usersList.isEmpty())
-            return null;
-        // else
-        MessageNode[] mn = new MessageNode[conversation_usersList.size()];
-        int i = 0;
-        for(UserConversation uc: conversation_usersList){
-            mn[i] = new MessageNode();
-            mn[i].text1 = uc.user.login;
-            i++;
-        }
-        return mn;
+        return null;
     }
 
     public void joinConversation(String login, String link) {
@@ -209,8 +212,14 @@ public class ChatTables {
                     userConvDao.queryBuilder();
             user_conversationList = userConvDao.query(queryBuilder.where().
                     eq("user", u).and().eq("conversation", c).prepare());
-            if (!(user_conversationList == null || user_conversationList.isEmpty()))
-                userConvDao.deleteById(user_conversationList.get(0).id);
+            if (user_conversationList == null || user_conversationList.isEmpty())
+                return;
+
+            userConvDao.deleteById(user_conversationList.get(0).id);
+            if (getMembers(link) == null){
+                convDao.delete(getConversation(link));
+            }
+
         } catch (SQLException e){System.out.println("getConversations "+e.getMessage());}
     }
 

@@ -28,10 +28,11 @@ public class TCPServer {
             ConnectionSource cs = new JdbcConnectionSource("jdbc:sqlite:test.sqlite3");
             ChatTables ct = new ChatTables(cs);
             ArrayList<ObjectOutputStream> outList = new ArrayList<ObjectOutputStream>();
+            ArrayList<String> onlineUsers = new ArrayList<String>();
             //synchronized (ct) {
                 while (true) {
                     Socket clientSocket = listenSocket.accept(); // listen for new connection
-                    new ConnectionInServer(clientSocket, ct, outList); // launch new thread
+                    new ConnectionInServer(clientSocket, ct, outList, onlineUsers); // launch new thread
                     System.out.println("New client");
                }
             //}

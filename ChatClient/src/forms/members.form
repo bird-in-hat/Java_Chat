@@ -15,26 +15,7 @@
           </grid>
         </constraints>
         <properties>
-          <model>
-            <item value="user1"/>
-            <item value="user2"/>
-            <item value="user3"/>
-            <item value="user1"/>
-            <item value="user2"/>
-            <item value="user3"/>
-            <item value="user1"/>
-            <item value="user2"/>
-            <item value="user3"/>
-            <item value="user1"/>
-            <item value="user2"/>
-            <item value="user3"/>
-            <item value="user1"/>
-            <item value="user2"/>
-            <item value="user3"/>
-            <item value="user1"/>
-            <item value="user2"/>
-            <item value="user3"/>
-          </model>
+          <model/>
         </properties>
       </component>
     </children>

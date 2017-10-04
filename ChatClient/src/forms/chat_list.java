@@ -19,13 +19,18 @@ public class chat_list extends JFrame{
     String[] title_list;
 
     public void updateContent(MessageNode[] chats) {
-        if (chats == null) { return; }
+        if (chats == null) {
+            list_chat_list.removeAll();
+            list_chat_list.updateUI();
+            return;
+        }
         title_list = new String[chats.length];
         link_list = new String[chats.length];
         for(int index = 0; index < chats.length; index++) {
             title_list[index] = chats[index].text1;
             link_list[index] = chats[index].text2;
         }
+        list_chat_list.removeAll();
         list_chat_list.setListData(title_list);
         list_chat_list.updateUI();
     }
@@ -105,6 +110,21 @@ public class chat_list extends JFrame{
             public void focusLost(FocusEvent e) {
                 super.focusLost(e);
                 setvis(false);
+            }
+        });
+        list_chat_list.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+                JList list = (JList)e.getSource();
+                if (e.getClickCount() == 2) {
+                    int index = list_chat_list.getSelectedIndex();
+                    MessageObject mo = new MessageObject();
+                    mo.code = 41;  // open conversation
+                    mo.info.text1 = title_list[index];
+                    mo.info.text2 = link_list[index];
+                    out.SendMessage(mo);
+                }
             }
         });
     }

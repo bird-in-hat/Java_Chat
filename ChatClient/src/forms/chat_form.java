@@ -91,7 +91,7 @@ public class chat_form extends JFrame{
         if (messageNodes == null) return;
         for (MessageNode mn: messageNodes) {
             try{
-                doc.insertString(doc.getLength(), mn.text1 + " : " + mn.text2, null);
+                doc.insertString(doc.getLength(), mn.text1 + " : " + mn.text2 + "\n", null);
                 textPane_chat.updateUI();
             } catch (BadLocationException e){
             }

@@ -10,7 +10,7 @@ public class User {
     public int id;
     @DatabaseField(canBeNull = false, unique = true, columnName = "login")
     public String login;
-    @DatabaseField(canBeNull = false, unique = true, columnName = "password")
+    @DatabaseField(canBeNull = false, columnName = "password")
     public String password;
 
     //@ForeignCollectionField()
