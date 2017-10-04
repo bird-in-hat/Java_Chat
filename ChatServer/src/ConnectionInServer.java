@@ -241,6 +241,7 @@ class ConnectionInServer extends Thread {
             mo.code = 71;
             mo.info.text2 = conv_link;
             mo.texts = new MessageNode[1];
+            mo.texts[0] = new MessageNode();
             mo.texts[0].text1 = sender;
             mo.texts[0].text2 = text;
             for (ObjectOutputStream oos: outList){

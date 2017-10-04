@@ -4,8 +4,7 @@ import javax.swing.*;
 import nodes.*;
 import src.ConnectionOutClient;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.util.ArrayList;
 
 public class chat_list extends JFrame{
@@ -17,16 +16,17 @@ public class chat_list extends JFrame{
     private JButton button_refresh;
     private JButton button_create;
     String[] link_list;
+    String[] title_list;
 
     public void updateContent(MessageNode[] chats) {
         if (chats == null) { return; }
-        String[] titleList = new String[chats.length];
+        title_list = new String[chats.length];
         link_list = new String[chats.length];
         for(int index = 0; index < chats.length; index++) {
-            titleList[index] = chats[index].text1;
+            title_list[index] = chats[index].text1;
             link_list[index] = chats[index].text2;
         }
-        list_chat_list.setListData(titleList);
+        list_chat_list.setListData(title_list);
         list_chat_list.updateUI();
     }
 
@@ -50,7 +50,8 @@ public class chat_list extends JFrame{
                 }
                 MessageObject mo = new MessageObject();
                 mo.code = 41;  // open conversation
-                mo.info.text1 = link_list[index];
+                mo.info.text1 = title_list[index];
+                mo.info.text2 = link_list[index];
                 out.SendMessage(mo);
             }
         });
@@ -92,5 +93,23 @@ public class chat_list extends JFrame{
                 new add_chat(out);
             }
         });
+        panel_chat_list.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                super.focusGained(e);
+                setvis(true);
+            }
+        });
+        panel_chat_list.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                super.focusLost(e);
+                setvis(false);
+            }
+        });
+    }
+
+    private void setvis(boolean flag) {
+        this.setVisible(flag);
     }
 } // +

@@ -6,6 +6,7 @@ import src.ConnectionOutClient;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
 
 public class add_chat extends JFrame{
     private JComboBox comboBox1;
@@ -20,6 +21,7 @@ public class add_chat extends JFrame{
         //setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.getContentPane().add(panel_create_chat);
         this.setName("add_chat");
+
         createButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

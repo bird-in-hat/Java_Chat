@@ -37,13 +37,13 @@ public class chat_form extends JFrame{
         button_send.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (0 == Integer.parseInt(textArea_message.getSize().toString())){
+                if (textArea_message.getText().equals("")){
                     return;
                 }
                 MessageObject mo = new MessageObject();
                 mo.code = 71;
                 mo.info.text1 = conv_link;
-                mo.info.text2 = new String(textArea_message.getText());
+                mo.info.text2 = textArea_message.getText();
                 out.SendMessage(mo);
                 textArea_message.setText("");
             }
@@ -84,15 +84,16 @@ public class chat_form extends JFrame{
                 JOptionPane.showMessageDialog(FormsHelper.get_frame(e), "Not implemented.");
             }
         });
+
     }
 
     public void updateContent(MessageNode[] messageNodes) {
+        if (messageNodes == null) return;
         for (MessageNode mn: messageNodes) {
             try{
                 doc.insertString(doc.getLength(), mn.text1 + " : " + mn.text2, null);
                 textPane_chat.updateUI();
             } catch (BadLocationException e){
-
             }
         }
     }

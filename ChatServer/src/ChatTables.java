@@ -184,6 +184,7 @@ public class ChatTables {
         MessageNode[] mn = new MessageNode[conversation_usersList.size()];
         int i = 0;
         for(UserConversation uc: conversation_usersList){
+            mn[i] = new MessageNode();
             mn[i].text1 = uc.user.login;
             i++;
         }
