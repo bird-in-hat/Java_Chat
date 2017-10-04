@@ -6,15 +6,15 @@ public class MessageNode implements Serializable {
     public String text1;
     public String text2;
 
-    MessageNode() { setDef(); }
+    public MessageNode() { setDef(); }
 
     private void setDef() {
-    	text1 = null; 
-    	text2 = null; 
+        text1 = null;
+        text2 = null;
     }
 
-    MessageNode(MessageNode other) {
-    	setDef();
+    public MessageNode(MessageNode other) {
+        setDef();
         if (other.text1 != null) text1 = new String(other.text1);
         if (other.text2 != null) text2 = new String(other.text2);
     }

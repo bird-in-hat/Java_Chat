@@ -22,7 +22,7 @@ public class Conversation {
     public ForeignCollection<Task> conversationTasks;
 
     @ForeignCollectionField()
-    public ForeignCollection<Task> conversationMessages;
+    public ForeignCollection<Message> conversationMessages;
 
     public Conversation() {}
     public Conversation(String title, String link) {

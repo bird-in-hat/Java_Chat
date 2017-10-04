@@ -13,8 +13,8 @@ public class User {
     @DatabaseField(canBeNull = false, unique = true, columnName = "password")
     public String password;
 
-    @ForeignCollectionField()
-    public ForeignCollection<UserConversation> userConversations;
+    //@ForeignCollectionField()
+    //public ForeignCollection<UserConversation> userConversations;
 
     public User() {}
     public User(String login, String password) {

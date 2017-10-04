@@ -8,7 +8,9 @@ import java.util.List;
 
 import java.sql.SQLException;
 import nodes.*;
-
+import com.j256.ormlite.stmt.PreparedQuery;
+import com.j256.ormlite.stmt.QueryBuilder;
+import com.j256.ormlite.stmt.SelectArg;
 public class ChatTables {
 
     private Dao<User, Integer> userDao;
@@ -43,9 +45,7 @@ public class ChatTables {
     private User getUser(String login_) {
         List<User> userList = null;
         try {
-            QueryBuilder<User, Integer> queryBuilder =
-                    userDao.queryBuilder();
-            userList = userDao.query(queryBuilder.where().eq("login", login_).prepare());
+            userList = userDao.queryForEq("login", login_);
         } catch (SQLException e){System.out.println("getUser "+e.getMessage());}
         if (userList == null || userList.isEmpty())
             return null;
@@ -56,9 +56,7 @@ public class ChatTables {
     private Conversation getConversation(String link_){
         List<Conversation> convList = null;
         try {
-            QueryBuilder<Conversation, Integer> queryBuilder =
-                    convDao.queryBuilder();
-            convList = convDao.query(queryBuilder.where().eq("link", link_).prepare());
+            convList = convDao.queryForEq("link", link_);
         } catch (SQLException e){System.out.println("getConversation "+e.getMessage());}
         if (convList == null || convList.isEmpty())
             return null;
@@ -117,6 +115,7 @@ public class ChatTables {
             return true;
     }
 
+
     public boolean isPasswordCorrect(String login, String password){
         User u = getUser(login);
         if (u == null || (!u.password.equals(password)))
@@ -129,9 +128,7 @@ public class ChatTables {
         List<Message> messageList = null;
         try {
             Conversation c = getConversation(link);
-            QueryBuilder<Message, Integer> queryBuilder =
-                    msgDao.queryBuilder();
-            messageList = msgDao.query(queryBuilder.where().eq("conversation", c).prepare());
+            messageList = msgDao.queryForEq("conversation", c);
         } catch (SQLException e){System.out.println("getMessages "+e.getMessage());}
         if (messageList == null || messageList.isEmpty())
             return null;
@@ -139,9 +136,13 @@ public class ChatTables {
         MessageNode[] mn = new MessageNode[messageList.size()];
         int i = 0;
         for(Message m: messageList){
-            mn[i].text1 = m.user.login;
-            mn[i].text2 = m.text;
-            i++;
+            try {
+                User u = userDao.queryForId(m.user.id);
+                mn[i] = new MessageNode();
+                mn[i].text1 = u.login;
+                mn[i].text2 = m.text;
+                i++;
+            } catch (SQLException e){System.out.println("getConversations queryForId"+e.getMessage());}
         }
         return mn;
     }
@@ -150,9 +151,7 @@ public class ChatTables {
         List<UserConversation> user_conversationList = null;
         try {
             User u = getUser(login);
-            QueryBuilder<UserConversation, Integer> queryBuilder =
-                    userConvDao.queryBuilder();
-            user_conversationList = userConvDao.query(queryBuilder.where().eq("user", u).prepare());
+            user_conversationList = userConvDao.queryForEq("user",u);
         } catch (SQLException e){System.out.println("getConversations "+e.getMessage());}
         if (user_conversationList == null || user_conversationList.isEmpty())
             return null;
@@ -160,9 +159,13 @@ public class ChatTables {
         MessageNode[] mn = new MessageNode[user_conversationList.size()];
         int i = 0;
         for(UserConversation uc: user_conversationList){
-            mn[i].text1 = uc.conversation.title;
-            mn[i].text2 = uc.conversation.link;
-            i++;
+            try {
+                Conversation c = convDao.queryForId(uc.conversation.id);
+                mn[i] = new MessageNode();
+                mn[i].text1 = c.title;
+                mn[i].text2 = c.link;
+                i++;
+            } catch (SQLException e){System.out.println("getConversations queryForId"+e.getMessage());}
         }
         return mn;
     }
@@ -206,7 +209,8 @@ public class ChatTables {
             user_conversationList = userConvDao.query(queryBuilder.where().
                     eq("user", u).and().eq("conversation", c).prepare());
             if (!(user_conversationList == null || user_conversationList.isEmpty()))
-                userConvDao.delete(user_conversationList.get(0));
+                userConvDao.deleteById(user_conversationList.get(0).id);
         } catch (SQLException e){System.out.println("getConversations "+e.getMessage());}
     }
+
 }

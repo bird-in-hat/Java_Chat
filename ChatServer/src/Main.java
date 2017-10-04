@@ -1,12 +1,3 @@
-//import org.sql2o.*;
-//      Sql2o sql2o = new Sql2o("jdbc:sqlite:test.db", "", "");
-//
-//              try(Connection con = sql2o.open())
-//              {
-//
-//              }
-
-
 import com.j256.ormlite.dao.CloseableWrappedIterable;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
@@ -32,19 +23,3 @@ public class Main {
 
 
 }
-        /*
-        CloseableWrappedIterable<Message> wrappedIterable =
-                msgDao.getWrappedIterable();
-        try {
-            for (Message mi : wrappedIterable) {
-                System.out.println(mi.user.login + ": " + mi.text);
-            }
-        } finally {
-            wrappedIterable.close();
-        }
-//        for(Message i: c1.messages.refresh())
-//        {
-//            System.out.println(i.user.name + ": " + i.text);
-//        }
-    }
-}*/
